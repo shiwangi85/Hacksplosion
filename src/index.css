@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* body {
+  @apply bg-gray-900;
+  background-image: 
+    radial-gradient(circle at center, rgba(99, 102, 241, 0.1) 0%, transparent 70%),
+    linear-gradient(to right, rgba(99, 102, 241, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(99, 102, 241, 0.05) 1px, transparent 1px);
+  background-size: 100% 100%, 24px 24px, 24px 24px;
+  min-height: 100vh;
+} */
+body {
+  @apply bg-white text-gray-900;
+  background-image: none; /* Remove gradients */
+  min-height: 100vh;
+}
+
+
+/* .glass-card {
+  @apply bg-gray-800/80 backdrop-blur-md border border-gray-700;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.2),
+              0 0 16px -2px rgba(99, 102, 241, 0.3);
+} */
+.glass-card {
+  @apply bg-white shadow-lg border border-gray-300;
+  box-shadow: 0 4px 24px -2px rgba(0, 0, 0, 0.1),
+              0 0 16px -2px rgba(207, 189, 54, 0.2); /* Softer shadow */
+}
+
+
+.gradient-text {
+  @apply bg-clip-text text-transparent bg-gradient-to-r from-indigo-400 to-purple-400;
+}
+
+/* .route-option {
+  @apply flex items-center gap-3 p-4 rounded-lg border border-gray-700/50 cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/10;
+  background: linear-gradient(to bottom right, rgba(98, 52, 138, 0.5), rgba(17, 24, 39, 0.5));
+} */
+.route-option {
+  @apply flex items-center gap-3 p-4 rounded-lg border border-gray-100/20 cursor-pointer transition-all duration-300 hover:shadow-lg hover:shadow-indigo-500/10;
+  background: linear-gradient(to bottom right, theme('colors.indigo.300'), theme('colors.purple.300'));
+}
+
+
+
+/* .route-option:hover:not(.selected) {
+  @apply border-gray-200 bg-gray-700/50;
+} */
+/* .route-option:hover:not(.selected) {
+  @apply border-purple-300 bg-purple-500/30;
+} */
+.route-option:hover:not(.selected) {
+  @apply border-purple-400 bg-purple-950/50 shadow-lg shadow-purple-950/20;
+}
+
+
+
+
+
+/* .input-field {
+  @apply w-full px-4 py-2.5 bg-gray-800/90 border border-gray-700 rounded-lg text-gray-100 placeholder-gray-500 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 transition-all duration-300;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+} */
+.input-field {
+  @apply bg-white border-gray-400 text-gray-800 placeholder-gray-600;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+}
