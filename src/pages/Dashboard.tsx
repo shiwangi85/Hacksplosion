@@ -193,6 +193,28 @@ const drawRoute = (route: any) => {
         fetchRoute();
       }}
     >
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            {routeOptions.map((option) => {
+              const Icon = option.icon;
+              return (
+                <div
+                  key={option.id}
+                  className={`route-option ${selectedRoute === option.id ? 'selected' : ''}`}
+                  onClick={() => setSelectedRoute(option.id)}
+                >
+                  <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-600/20 to-purple-500/20">
+                    <Icon className="w-5 h-5 text-green-700" />
+                  </div>
+                  <div>
+                    <h3 className="font-semibold text-gray-900">{option.name}</h3>
+                    <p className="text-sm text-gray-900 mt-1">{option.description}</p>
+                    <span className="text-xs font-medium text-indigo-900 mt-2 block">{option.reduction}</span>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+          
       <div className="flex gap-4">
         <div className="flex-1">
           <label className="block text-xl font-medium text-gray-900 mb-2">
