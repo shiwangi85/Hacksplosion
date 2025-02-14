@@ -12,7 +12,12 @@
   "dependencies": {
     "@rollup/rollup-darwin-arm64": "^4.34.1",
     "@supabase/supabase-js": "^2.39.7",
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "lucide-react": "^0.344.0",
+    "mongoose": "^8.10.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.22.2",

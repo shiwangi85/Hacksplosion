@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+
+import React, { useEffect ,useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, PieChart, Pie, Cell } from 'recharts';
 import { Activity, Users, AlertTriangle, Clock, TrendingUp, Zap, Leaf, Timer, Fuel, MapPin } from 'lucide-react';
 
@@ -73,9 +74,97 @@ const routeOptions = [
 ];
 
 export default function Dashboard() {
-  const [selectedRoute, setSelectedRoute] = useState('');
-  const [showMap, setShowMap] = useState(false);
-  const [destination, setDestination] = useState('');
+  const [selectedRoute, setSelectedRoute] = useState('');       // e
+  const [showMap, setShowMap] = useState(false);      // e
+  const [currentLocation, setCurrentLocation] = useState<string>("Fetching...");
+  const [destination, setDestination] = useState<string>("");
+  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [map, setMap] = useState<any>(null);
+  const [routeData, setRouteData] = useState<any>(null);
+const apiKey = "21aec3f8c1f1cf282554c5d96095864e";
+
+useEffect(() => {
+  if ("geolocation" in navigator) {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        const { latitude, longitude } = position.coords;
+        setCurrentLocation(`${latitude},${longitude}`);
+      },
+      (error) => {
+        console.error("Error fetching location:", error);
+        setCurrentLocation("Location access denied");
+      },
+      { enableHighAccuracy: true }
+    );
+  } else {
+    setCurrentLocation("Geolocation not supported");
+  }
+}, []);
+
+
+
+useEffect(() => {
+  if (window.L && !map) {
+    const mapInstance = window.L.map("map", {
+      center: [28.6139, 77.2090],
+      zoom: 12
+    });
+
+    window.L.tileLayer(
+      "https://maps.mapmyindia.com/cdn/map_sdk?key=21aec3f8c1f1cf282554c5d96095864e",
+      { attribution: "MapMyIndia" }
+    ).addTo(mapInstance);
+
+    setMap(mapInstance);
+  }
+}, [map]);
+
+
+
+const fetchAddressSuggestions = async (query: string) => {
+  if (!query) {
+    setSuggestions([]);
+    return;
+  }
+  try {
+    const response = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&countrycodes=IN&viewbox=76.75,28.95,77.35,28.40&bounded=1&q=${query}`
+    );
+    const data = await response.json();
+    setSuggestions(data.map((item: any) => item.display_name));
+  } catch (error) {
+    console.error("Error fetching address suggestions:", error);
+  }
+};
+
+
+const fetchRoute = async () => {
+  const API_URL = `https://apis.mapmyindia.com/advancedmaps/v1/${apiKey}/route_adv/driving/${currentLocation};${destination}`;
+  try {
+    const response = await fetch(API_URL);
+    const data = await response.json();
+    if (!data.routes || data.routes.length === 0) {
+      console.error("No routes found.");
+      return;
+    }
+    const route = data.routes[0].geometry.coordinates;
+    setRouteData(route);
+    drawRoute(route);
+    setTimeout(() => drawRoute(route), 500);
+  } catch (error) {
+    console.error("Error fetching route:", error);
+  }
+};
+
+
+const drawRoute = (route: any) => {
+  if (!map) return;
+
+  const latlngs = route.map(([lon, lat]: any) => [lat, lon]); // Convert to [lat, lon]
+  const polyline = window.L.polyline(latlngs, { color: "blue" }).addTo(map);
+  map.fitBounds(polyline.getBounds());
+};
+
 
   const handleRouteSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -96,83 +185,78 @@ export default function Dashboard() {
 
       <div className="p-6 rounded-xl border-4 border-black-900/30 bg-cream-900/30 backdrop-blur-md">
         <h2 className="text-3xl font-bold gradient-text mb-6">Route Planner</h2>
-        <form onSubmit={handleRouteSubmit} className="space-y-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {routeOptions.map((option) => {
-              const Icon = option.icon;
-              return (
-                <div
-                  key={option.id}
-                  className={`route-option ${selectedRoute === option.id ? 'selected' : ''}`}
-                  onClick={() => setSelectedRoute(option.id)}
-                >
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-600/20 to-purple-500/20">
-                    <Icon className="w-5 h-5 text-green-700" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{option.name}</h3>
-                    <p className="text-sm text-gray-900 mt-1">{option.description}</p>
-                    <span className="text-xs font-medium text-indigo-900 mt-2 block">{option.reduction}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-          
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <label className="block text-xl font-medium text-gray-900 mb-2">Current Location</label>
-              <input type="text" 
-  className="input-field gap-5 block w-full border-4 border-black rounded-md " 
-  value="Current Location"
-/>
+     
+     
+        <form
+      onSubmit={(e) => {
+        e.preventDefault();
+        fetchRoute();
+      }}
+    >
+      <div className="flex gap-4">
+        <div className="flex-1">
+          <label className="block text-xl font-medium text-gray-900 mb-2">
+            Current Location
+          </label>
+          <input
+            type="text"
+            className="input-field block w-full border-4 border-black rounded-md"
+            value={currentLocation}
+            readOnly
+          />
+        </div>
 
-              <div className="relative gap-6">
+        <div className="flex-1">
+          <label className="block text-xl font-medium text-gray-900 mb-2">
+            Destination
+          </label>
+          <div className="relative">
+            <input
+              type="text"
+              className="input-field block w-full border-4 border-black rounded-md"
+              placeholder="Enter destination"
+              value={destination}
+              onChange={(e) => {
+                setDestination(e.target.value);
+                fetchAddressSuggestions(e.target.value);
+              }}
+            />
+            {suggestions.length > 0 && (
+              <ul className="absolute w-full bg-black border border-gray-300 rounded-md shadow-lg z-10">
+                {suggestions.map((suggestion, index) => (
+                  <li
+                    key={index}
+                    className="p-2 cursor-pointer hover:bg-gray-200"
+                    onClick={() => {
+                      setDestination(suggestion);
+                      setSuggestions([]);
+                    }}
+                  >
+                    {suggestion}
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          className="self-end px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 disabled:opacity-50 shadow-lg shadow-indigo-500/20"
+          disabled={!destination}
+        >
+          Find Route
+        </button>
+      </div>
+
+      <div id="map" className="w-full h-[500px] mt-5 border-2 border-gray-500 rounded-md"></div>
+    </form>
+          
+          
                 
       
-              </div>
-            </div>
-            <div className="flex-1">
-              <label className="block text-xl font-medium text-gray-900 mb-2">Destination</label>
-              <div className="relative">
-              <input type="text" 
-  className="input-field gap-5 block w-full border-4 border-black rounded-md " 
-  placeholder="Enter destination"
-                  value={destination}
-                  onChange={(e) => setDestination(e.target.value)}
-/>
-                
-              </div>
-            </div>
-            <button
-              type="submit"
-              className="self-end px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 disabled:opacity-50 shadow-lg shadow-indigo-500/20"
-              disabled={!selectedRoute || !destination}
-            >
-              Find Route
-            </button>
-          </div>
-        </form>
 
-        {showMap && (
-          <div className="mt-6 rounded-lg overflow-hidden border border-indigo-500/20 h-[400px] bg-gray-800/50 backdrop-blur-sm">
-            <div className="w-full h-full relative">
-              <img 
-                src="https://images.unsplash.com/photo-1524661135-423995f22d0b?auto=format&fit=crop&w=1600&q=80"
-                alt="Night city map"
-                className="w-full h-full object-cover opacity-60"
-              />
-              <div className="absolute inset-0 bg-gradient-to-b from-indigo-500/10 to-purple-500/10"></div>
-              <div className="absolute bottom-4 left-4 bg-gray-900/90 p-4 rounded-lg border border-indigo-500/20 backdrop-blur-sm">
-                <div className="text-indigo-400 font-medium mb-1">Route Details</div>
-                <div className="text-gray-300 text-sm">Distance: 8.2 km</div>
-                <div className="text-gray-300 text-sm">Est. Time: 15 mins</div>
-                {selectedRoute === 'eco' && <div className="text-emerald-400 text-sm">CO₂ Saved: 2.5 kg</div>}
-                {selectedRoute === 'fuel' && <div className="text-emerald-400 text-sm">Fuel Saved: 0.8 L</div>}
-              </div>
-            </div>
-          </div>
-        )}
+   
       </div>
       
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -278,3 +362,4 @@ export default function Dashboard() {
     </div>
   );
 }
+export { Dashboard };
