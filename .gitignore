@@ -1,0 +1,31 @@
+# macOS system files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# VSCode settings
+.vscode/
+
+# Node.js dependencies (if applicable)
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Python files (if applicable)
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Compiled binary files
+*.out
+*.exe
+*.o
+*.a
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Git files
+.git/
