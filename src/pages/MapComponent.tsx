@@ -1,35 +1,93 @@
-import React, { useEffect } from "react";
-import L from "leaflet";
-import MapComponent from "./MapComponent";
+import { useEffect, useState } from "react";
 
-const MapComponent = ({ currentLocation, destination, routes }: any) => {
+const MapComponent = () => {
+  const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [map, setMap] = useState<any>(null);
+  const [marker, setMarker] = useState<any>(null);
+  const mapplsApiKey = "9fa106fc5e89d46ea995c238fea17299"; // Replace with your API key
+
   useEffect(() => {
-    if (!currentLocation || !destination || !routes.length) return;
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          console.log("Location fetched:", latitude, longitude);
+          setLocation({ lat: latitude, lng: longitude });
+        },
+        (error) => {
+          console.error("Error fetching location:", error);
+          alert("Location access denied. Showing default marker.");
+          setLocation({ lat: 28.6139, lng: 77.2090 }); // Default location (Delhi)
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }, []);
 
-    const [lat1, lon1] = currentLocation.split(", ");
-    const { latitude, longitude } = destination;
+  useEffect(() => {
+    if (!location) return;
 
-    // Initialize Map
-    const map = L.map("map").setView([lat1, lon1], 14);
+    if (map) {
+      if (marker) marker.remove(); // Remove existing marker
 
-    // Add OpenStreetMap tiles
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-      attribution: "© OpenStreetMap contributors",
-    }).addTo(map);
+      const newMarker = new window.MapmyIndia.Marker({
+        map: map,
+        position: location,
+        draggable: false,
+      });
 
-    // Add markers
-    L.marker([lat1, lon1]).addTo(map).bindPopup("Start Location");
-    L.marker([latitude, longitude]).addTo(map).bindPopup("Destination");
+      setMarker(newMarker);
+      map.setCenter(location);
+    }
+  }, [location, map]); // Runs when location or map changes
 
-    // Add routes with different colors
-    const colors = ["blue", "green", "red"];
-    routes.forEach((route: any, index: number) => {
-      const polyline = L.polyline(route, { color: colors[index % colors.length] }).addTo(map);
-      map.fitBounds(polyline.getBounds());
-    });
-  }, [currentLocation, destination, routes]);
+  useEffect(() => {
+    if (!location) return;
 
-  return <div id="map" style={{ height: "400px", width: "100%" }}></div>;
+    function initializeMap() {
+      if (map) return;
+
+      const mapInstance = new window.MapmyIndia.Map("map", {
+        center: location,
+        zoom: 12,
+        zoomControl: true,
+        hybrid: false,
+      });
+
+      const initialMarker = new window.MapmyIndia.Marker({
+        map: mapInstance,
+        position: location,
+        draggable: false,
+      });
+
+      setMap(mapInstance);
+      setMarker(initialMarker);
+    }
+
+    if (window.MapmyIndia) {
+      initializeMap();
+    } else {
+      console.log("Loading MapMyIndia script...");
+      const script = document.createElement("script");
+      script.src = `https://apis.mappls.com/advancedmaps/api/${mapplsApiKey}/map_sdk?layer=vector&v=2.0`;
+      script.async = true;
+      script.defer = true;
+      script.onload = () => {
+        console.log("MapMyIndia script loaded.");
+        initializeMap();
+      };
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      if (map) {
+        map.remove();
+      }
+    };
+  }, [location]);
+
+  return <div id="map" style={{ width: "100%", height: "500px" }}></div>;
 };
 
 export default MapComponent;

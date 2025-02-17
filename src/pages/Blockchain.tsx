@@ -1,5 +1,6 @@
-import React from 'react';
 import { Blocks, Shield, Clock } from 'lucide-react';
+import ExternalWebsite from './ExternalWebsite';
+import MapComponent from './MapComponent';
 
 const transactions = [
   {
@@ -23,6 +24,7 @@ export default function Blockchain() {
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-blue-400">Blockchain Ledger</h1>
 
+    <MapComponent/>
       <div className="grid gap-6">
         {transactions.map((tx) => (
           <div key={tx.id} className="bg-gray-800 p-6 rounded-xl border border-gray-700">
