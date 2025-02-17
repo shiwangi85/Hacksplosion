@@ -1,6 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Car, Bike, Truck, Clock, Leaf, Shield } from 'lucide-react';
+// import { Map, MapplsGL } from "@mappls/mappls-web-maps";
+import axios from "axios";
+
+const MAPPLS_API_KEY = "21aec3f8c1f1cf282554c5d96095864e"; 
 
 // Add these interfaces at the top of the file
 interface Location {
@@ -20,7 +24,7 @@ const RouteInput = () => {
     const navigate = useNavigate();
     const [vehicleType, setVehicleType] = useState('car');
     const [routeType, setRouteType] = useState('fastest');
-
+    const [routeData, setRouteData] = useState(null);
     // Add new state variables
     const [sourceQuery, setSourceQuery] = useState('');
     const [destQuery, setDestQuery] = useState('');
@@ -35,7 +39,8 @@ const RouteInput = () => {
     const startMarkerRef = useRef<any>(null);
     const destinationMarkerRef = useRef<any>(null);
 
-    // Modify fetchAddressSuggestions to return full location data
+    //  fetchAddressSuggestions to return full location data
+    // thia ia to fetch address with suggestion  
     const fetchAddressSuggestions = async (query: string) => {
         if (!query) {
             return [];
@@ -147,6 +152,41 @@ const RouteInput = () => {
 
     };
 
+    const fetchCurrentLocation = () => {
+        if ("geolocation" in navigator) {
+          navigator.geolocation.getCurrentPosition(
+            async (position) => {
+              const { latitude, longitude } = position.coords;
+              console.log("Current Location:", latitude, longitude);
+    
+              // Fetch address using OpenStreetMap's Nominatim API
+              const response = await fetch(
+                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+              );
+              const data = await response.json();
+    
+              if (data.display_name) {
+                setSourceQuery(data.display_name);
+                setSourceLocation({
+                  name: data.display_name,
+                  lat: latitude,
+                  lon: longitude,
+                });
+              }
+            },
+            (error) => {
+              console.error("Error getting location:", error);
+              alert("Failed to get location. Please enable location services.");
+            }
+          );
+        } else {
+          alert("Geolocation is not supported by your browser.");
+        }
+      };
+    
+    
+
+
     useEffect(() => {
         if (window.MapmyIndia && (sourceLocation || destLocation)) {
             const startLoc = sourceLocation ? { lat: parseFloat(sourceLocation.lat), lng: parseFloat(sourceLocation.lon) } : null;
@@ -167,6 +207,27 @@ const RouteInput = () => {
         }
     }, [sourceLocation, destLocation]);
 
+          // Fetch optimized route
+    const fetchRoute = async () => {
+        if (!sourceLocation || !destLocation) return;
+
+        const apiUrl = `https://apis.mappls.com/advancedmaps/v1/${MAPPLS_API_KEY}/route_eta?geojson=true&rtype=${routeType}&vtype=${vehicleType}&start=${sourceLocation.lat},${sourceLocation.lon}&end=${destLocation.lat},${destLocation.lon}`;
+
+        try {
+            const response = await axios.get(apiUrl);
+            if (response.data && response.data.route) {
+                setRouteData(response.data.route);
+            }
+        } catch (error) {
+            console.error("Error fetching route:", error);
+        }
+    };
+    useEffect(() => {
+        fetchRoute();
+    }, [vehicleType, routeType, sourceLocation, destLocation]);
+
+
+
 
     return (
         <div className="max-w-2xl mx-auto px-4 py-8">
@@ -177,7 +238,8 @@ const RouteInput = () => {
                 <div className="space-y-4">
                     <div className="relative">
                         <label htmlFor="source" className="block text-sm font-medium text-gray-700">Starting Point</label>
-                        <input
+                        <div className="flex">
+                              <input
                             type="text"
                             id="source"
                             value={sourceQuery}
@@ -185,11 +247,20 @@ const RouteInput = () => {
                                 setSourceQuery(e.target.value);
                                 setSourceLocation(null);
                             }}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                            placeholder="Enter starting location"
+                            className="mt-1 block w-full rounded-md border-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-pink-900"
+                            placeholder="Enter starting location "
                         />
+                         <button
+          type="button"
+          onClick={fetchCurrentLocation}
+          className="ml-2 px-3 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600"
+        >
+          📍 Use Current Location
+        </button>
+      </div>
+
                         {sourceSuggestions.length > 0 && !sourceLocation && (
-                            <div className="absolute z-10 w-full bg-white mt-1 border border-gray-300 rounded-md shadow-lg">
+                            <div className="absolute z-10 w-full bg-black mt-1 border border-gray-900 rounded-md shadow-lg">
                                 {sourceSuggestions.map((suggestion: LocationSuggestion) => (
                                     <div
                                         key={suggestion.place_id}
@@ -221,15 +292,15 @@ const RouteInput = () => {
                                 setDestQuery(e.target.value);
                                 setDestLocation(null);
                             }}
-                            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500"
+                            className="mt-1 block w-full rounded-md border-gray-900 shadow-sm focus:border-blue-900 focus:ring-blue-500 text-pink-900"
                             placeholder="Enter destination"
                         />
                         {destSuggestions.length > 0 && !destLocation && (
-                            <div className="absolute z-10 w-full bg-white mt-1 border border-gray-300 rounded-md shadow-lg">
+                            <div className="absolute z-10 w-full bg-black mt-1 border border-gray-900 rounded-md shadow-lg">
                                 {destSuggestions.map((suggestion: LocationSuggestion) => (
                                     <div
                                         key={suggestion.place_id}
-                                        className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                                        className="px-4 py-2 hover:bg-gray-900 cursor-pointer"
                                         onClick={() => {
                                             setDestQuery(suggestion.display_name);
                                             setDestLocation({
@@ -300,6 +371,7 @@ const RouteInput = () => {
 
                 <button
                     type="submit"
+                    onClick={fetchRoute}
                     className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                 >
                     Optimize Route
@@ -313,6 +385,47 @@ const RouteInput = () => {
         </div>
     );
 };
+
+
+// Component to render the map
+const MapComponent = ({ routeData }) => {
+    useEffect(() => {
+        if (!routeData) return;
+
+        // Initialize the map
+        const map = new MapplsGL.Map({
+            container: "map",
+            center: [routeData.start.lng, routeData.start.lat],
+            zoom: 12,
+            accessToken: MAPPLS_API_KEY,
+        });
+
+        // Add the route to the map
+        map.on("load", () => {
+            map.addSource("route", {
+                type: "geojson",
+                data: routeData.geojson,
+            });
+
+            map.addLayer({
+                id: "route-layer",
+                type: "line",
+                source: "route",
+                layout: {
+                    "line-join": "round",
+                    "line-cap": "round",
+                },
+                paint: {
+                    "line-color": "#007AFF",
+                    "line-width": 4,
+                },
+            });
+        });
+    }, [routeData]);
+
+    return <div id="map" style={{ width: "100%", height: "500px" }} />;
+};
+
 
 const VehicleOption = ({ icon, label, selected, onClick }: { icon: React.ReactNode, label: string, selected: boolean, onClick: () => void }) => (
     <button
