@@ -6,6 +6,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import { Activity, Users, AlertTriangle, Clock, TrendingUp, Zap, Leaf, Timer, Fuel, MapPin } from 'lucide-react';
 import { set } from 'mongoose';
 import MapComponent from './MapComponent';
+import RouteInput from './RouteInput';
 
 const data = [
   { name: 'Mon', optimization: 65, emergency: 12 },
@@ -330,93 +331,7 @@ export default function Dashboard() {
       <div className="p-6 rounded-xl border-4 border-black-900/30 bg-cream-900/30 backdrop-blur-md">
         <h2 className="text-3xl font-bold gradient-text mb-6">Route Planner</h2>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            fetchRoute();
-          }}
-        >
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {routeOptions.map((option) => {
-              const Icon = option.icon;
-              return (
-                <div
-                  key={option.id}
-                  className={`route-option ${selectedRoute === option.id ? 'selected' : ''}`}
-                  onClick={() => setSelectedRoute(option.id)}
-                >
-                  <div className="p-2 rounded-lg bg-gradient-to-br from-indigo-600/20 to-purple-500/20">
-                    <Icon className="w-5 h-5 text-green-700" />
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-gray-900">{option.name}</h3>
-                    <p className="text-sm text-gray-900 mt-1">{option.description}</p>
-                    <span className="text-xs font-medium text-indigo-900 mt-2 block">{option.reduction}</span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="flex gap-4">
-            <div className="flex-1">
-              <label className="block text-xl font-medium text-gray-900 mb-2">
-                Current Location
-              </label>
-              <input
-                type="text"
-                className="input-field block w-full border-4 border-black rounded-md"
-                value={currentLocation}
-                readOnly
-              />
-            </div>
-
-            <div className="flex-1">
-              <label className="block text-xl font-medium text-gray-900 mb-2">
-                Destination
-              </label>
-              <div className="relative">
-                <input
-                  type="text"
-                  className="input-field block w-full border-4 border-black rounded-md"
-                  placeholder="Enter destination"
-                  value={destination}
-                  onChange={(e) => {
-                    setDestination(e.target.value);
-                    fetchAddressSuggestions(e.target.value);
-                  }}
-                />
-                {suggestions.length > 0 && (
-                  <ul className="absolute w-full max-h-60 overflow-y-auto bg-black border border-gray-300 rounded-md shadow-lg z-30">
-                    {suggestions.map((suggestion, index) => (
-                      <li
-                        key={index}
-                        className="p-2 cursor-pointer hover:bg-gray-200"
-                        onClick={() => {
-                          setDestination(suggestion);
-                          setSuggestions([]);
-                        }}
-                      >
-                        {suggestion}
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </div>
-            </div>
-
-            <button
-              type="submit"
-              className="self-end px-6 py-2.5 bg-gradient-to-r from-indigo-500 to-purple-500 text-white rounded-lg hover:from-indigo-600 hover:to-purple-600 transition-all duration-300 disabled:opacity-50 shadow-lg shadow-indigo-500/20"
-              disabled={!destination}
-            >
-              Find Route
-            </button>
-          </div>
-
-          {/* Map */}
-          <MapComponent destination={destination}/>
-        </form>
+        <RouteInput/>
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
