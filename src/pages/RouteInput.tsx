@@ -1,7 +1,13 @@
+<<<<<<< HEAD
 
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Car, Bike, Truck, Clock, Leaf, Shield, Ship, Wallet, Trees, Footprints } from "lucide-react";
+=======
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
+import { Car, Bike, Truck, Clock, Leaf, Shield, Ship, Wallet, Trees, Footprints ,Route , Navigation} from "lucide-react";
+>>>>>>> 8d9c6289 (Initial commit)
 import axios from "axios";
 
 // Add type declaration for window.mappls
@@ -11,8 +17,17 @@ declare global {
   }
 }
 
+<<<<<<< HEAD
 // const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
 const MAPPLS_API_KEY = "261eece0-1092-4aea-980c-ba48a9a99542";
+=======
+const getActiveVehicle = () => {
+  const activeVehicle = localStorage.getItem('activeVehicle');
+  return activeVehicle ? JSON.parse(activeVehicle) : null;
+};
+// const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
+const MAPPLS_API_KEY = "e9734494-bfbc-4d7e-9778-aeca681775f3";
+>>>>>>> 8d9c6289 (Initial commit)
 
 // Add these interfaces at the top of the file
 interface Location {
@@ -42,6 +57,7 @@ const VehicleOption = ({
   <button
     type="button"
     onClick={onClick}
+<<<<<<< HEAD
     className={`p-4 border rounded-lg flex flex-col items-center ${
       selected
         ? "border-blue-500 bg-blue-50"
@@ -52,13 +68,101 @@ const VehicleOption = ({
     <span className="mt-2 text-sm font-medium">{label}</span>
   </button>
 );
+=======
+    className={`
+      flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-200
+      ${selected 
+        ? 'bg-gradient-to-br from-gray-100 to-white shadow-inner border-none'
+        : 'bg-gradient-to-tl from-gray-100 to-white shadow-lg hover:shadow-xl'
+      }
+      ${selected
+        ? 'shadow-[inset_3px_3px_6px_#bebebe,inset_-3px_-3px_6px_#ffffff]'
+        : 'shadow-[5px_5px_10px_#bebebe,-5px_-5px_10px_#ffffff]'
+      }
+    `}
+  >
+      <div className={`
+      mb-2 transform transition-transform duration-200
+      ${selected ? 'scale-90 text-purple-600' : 'scale-100 text-gray-600'}
+    `}>
+    {icon}
+    </div>
+    {/* <span className="mt-2 text-sm font-medium">{label}</span> */}
+    <span className={`
+      text-sm font-medium transition-colors duration-200
+      ${selected ? 'text-purple-600' : 'text-gray-600'}
+    `}>
+      {label}
+    </span>
+
+  </button>
+);
+//  ----this is for location input css ---------
+const LocationInput = ({ 
+  label, 
+  value, 
+  onChange, 
+  placeholder, 
+  onLocationClick, 
+  showLocationButton,
+  suggestions,
+  onSuggestionSelect 
+}) => (
+  <div className="relative">
+    <label className="block text-sm font-medium text-gray-700 mb-1">
+      {label}
+    </label>
+    <div className="relative flex items-center">
+      <div className="absolute left-3 text-gray-400">
+        <MapPin size={18} />
+      </div>
+      <input
+        value={value}
+        onChange={onChange}
+        placeholder={placeholder}
+        className="w-full pl-10 pr-4 py-3 rounded-lg border-2 border-gray-200 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:border-transparent transition-all duration-200 bg-white/80 text-gray-900 placeholder-gray-500"
+      />
+      {showLocationButton && (
+        <button
+          onClick={onLocationClick}
+          className="absolute right-3 px-3 py-1.5 bg-purple-50 text-purple-600 rounded-md hover:bg-purple-100 transition-colors duration-200"
+        >
+          <Navigation size={18} />
+        </button>
+      )}
+    </div>
+    
+    {/* Suggestions Dropdown */}
+    {suggestions && suggestions.length > 0 && (
+      <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
+        {suggestions.map((suggestion) => (
+          <div
+            key={suggestion.place_id}
+            className="px-4 py-2 hover:bg-purple-50 cursor-pointer transition-colors duration-150"
+            onClick={() => onSuggestionSelect(suggestion)}
+          >
+            <div className="text-sm text-gray-900">{suggestion.display_name}</div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+);
+
+
+>>>>>>> 8d9c6289 (Initial commit)
 
 // -------------- Main Component starts here --------------
 const RouteInput = () => {
   const navigate = useNavigate();
   const [vehicleType, setVehicleType] = useState("car");
+<<<<<<< HEAD
   const [routeType, setRouteType] = useState("fastest");
   const [routeData, setRouteData] = useState(null);
+=======
+  // const [routeType, setRouteType] = useState("fastest");
+  // const [routeData, setRouteData] = useState(null);
+>>>>>>> 8d9c6289 (Initial commit)
   const [routeRequested, setRouteRequested] = useState(false); // this is for request tot get route after i vclick to button
 
   // Add new state variables
@@ -145,6 +249,7 @@ const RouteInput = () => {
     });
   };
 
+<<<<<<< HEAD
   // ------------------------------ Create Map Initialization function here ------------------------------
   const initializeMap = (startLoc: any, destinationLoc: any) => {
     if (mapRef.current) {
@@ -156,12 +261,35 @@ const RouteInput = () => {
 
     let center: { lat: number; lng: number } = { lat: 28.6139, lng: 77.209 }; // Default center
 
+=======
+  const initializeMap = (startLoc: any, destinationLoc: any) => {
+    if (mapRef.current) {
+      // Clear existing map data
+      if (startMarkerRef.current) {
+        startMarkerRef.current.remove();
+        startMarkerRef.current = null;
+      }
+      if (destinationMarkerRef.current) {
+        destinationMarkerRef.current.remove();
+        destinationMarkerRef.current = null;
+      }
+      mapRef.current.remove();
+      mapRef.current = null;
+    }
+  
+    let center: { lat: number; lng: number } = { lat: 28.6139, lng: 77.209 }; // Default center
+  
+>>>>>>> 8d9c6289 (Initial commit)
     if (startLoc) {
       center = startLoc;
     } else if (destinationLoc) {
       center = destinationLoc;
     }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 8d9c6289 (Initial commit)
     const mapInstance = new window.MapmyIndia.Map("map", {
       center: center,
       zoom: 12,
@@ -169,7 +297,11 @@ const RouteInput = () => {
       hybrid: false,
     });
     mapRef.current = mapInstance;
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 8d9c6289 (Initial commit)
     if (startLoc) {
       const newStartMarker = new window.MapmyIndia.Marker({
         map: mapInstance,
@@ -178,7 +310,11 @@ const RouteInput = () => {
       });
       startMarkerRef.current = newStartMarker;
     }
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 8d9c6289 (Initial commit)
     if (destinationLoc) {
       const newDestinationMarker = new window.MapmyIndia.Marker({
         map: mapInstance,
@@ -189,7 +325,11 @@ const RouteInput = () => {
     }
   };
 
+<<<<<<< HEAD
   //  ---------------------- Fetch current location using geolocation api  ------------------------------
+=======
+  //  ---------------------- Fetch current location using geoloNavigationcation api  ------------------------------
+>>>>>>> 8d9c6289 (Initial commit)
   const fetchCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -367,6 +507,11 @@ const RouteInput = () => {
     }
   }, [routeRequested]); // Trigger fetch only when button is clicked
 
+<<<<<<< HEAD
+=======
+  const activeVehicle = getActiveVehicle();
+  
+>>>>>>> 8d9c6289 (Initial commit)
   // ---------------------- Return the main UI here ----------------------
   return (
     <div className="w-full px-4 py-8">
@@ -380,7 +525,11 @@ const RouteInput = () => {
               htmlFor="source"
               className="block text-sm font-medium text-gray-700"
             >
+<<<<<<< HEAD
               Starting Point {/* Source Input Field */}
+=======
+              Starting Point 
+>>>>>>> 8d9c6289 (Initial commit)
             </label>
 
             {/* this is for input current suggestion  */}
@@ -401,7 +550,11 @@ const RouteInput = () => {
                 onClick={fetchCurrentLocation}
                 className="ml-2 px-3 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600"
               >
+<<<<<<< HEAD
                 📍 Use Current Location {/* Current Location Button */}
+=======
+                📍 Use Current Location 
+>>>>>>> 8d9c6289 (Initial commit)
               </button>
             </div>
 
@@ -524,7 +677,11 @@ const RouteInput = () => {
         </div>
 
         {/* -------------------------- Submit Button ---------------------------- */}
+<<<<<<< HEAD
         <button
+=======
+        {/* <button
+>>>>>>> 8d9c6289 (Initial commit)
           type="submit"
           onClick={(e) => {
             e.preventDefault();
@@ -536,10 +693,110 @@ const RouteInput = () => {
           }}
           className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
+<<<<<<< HEAD
           Get Route
         </button>
 
         <div id="map" style={{ width: "100%", height: "500px" }}></div>
+=======
+          <Navigation size={20} />
+          <span>Get Route</span>
+        </button> */}
+
+
+<button
+  type="submit"
+  onClick={(e) => {
+    e.preventDefault();
+    if (!sourceLocation || !destLocation) {
+      alert("Please select both a starting point and destination!");
+      return;
+    }
+
+    setRouteRequested(true);  // Update state
+
+    setTimeout(() => {
+      fetchRoute(); // Ensure fetchRoute runs immediately
+    }, 0);
+  }}
+  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+>
+  <Navigation size={20} />
+  <span>Get Route</span>
+</button>
+
+
+        <div className="flex flex-row w-full gap-4"> 
+          <div id="map" style={{ width: "70%", height: "500px" }}></div>
+          {sourceLocation && destLocation && 
+          (<div className="w-[30%] p-4 bg-white rounded-lg shadow overflow-auto">
+            <h2 className="text-xl font-semibold mb-4 text-gray-900">Available Routes</h2>
+            {directionPluginRef.current?.data ? (
+              <div className="space-y-4">
+                {Array.from({ length: directionPluginRef.current.data.length }, (_, i) => {
+                  const distance = parseFloat(directionPluginRef.current.data[i].distance); // Distance in km
+                  const mileage = parseFloat(activeVehicle.veh_mileage); // Vehicle mileage in km/l
+                  const fuelType = activeVehicle.fuel_type.toLowerCase();
+
+                  // Emission factor based on fuel type
+                  const emissionFactors = {
+                    petrol: 2.31,
+                    diesel: 2.68,
+                    cng: 2.75,
+                  };
+
+                  const co2Emission = mileage
+                    ? ((distance / mileage) * (emissionFactors[fuelType] || 2.31)).toFixed(2)
+                    : 'N/A'; // Default to Petrol if fuel type is unknown
+
+                  return (
+                    <div 
+                      key={i}
+                      className="p-4 border border-gray-900 rounded-lg hover:border-blue-500 cursor-pointer transition-colors"
+                    >
+                      <div className="flex items-center justify-between mb-2">
+                        <span className="font-medium text-gray-900">Route {i + 1}</span>
+                        <span className="text-sm text-gray-900">
+                          {directionPluginRef.current.data[i].routeName || `Route ${i + 1}`}
+                        </span>
+                      </div>
+                      <div className="grid grid-cols-2 gap-4">
+                        <div className="flex items-center space-x-2">
+                          <Route className="w-4 h-4 text-gray-900" />
+                          <span className="text-gray-900">
+                            {distance} km
+                          </span>
+                        </div>
+                    
+
+
+<div className="flex items-center space-x-2">
+  <Clock className="w-4 h-4 text-gray-900" />
+  <span className="text-gray-900">
+  {directionPluginRef.current.data[i].eta.replace(/<[^>]*>/g, "")}
+  </span>
+</div>
+                     
+                        <div className="flex items-center space-x-2 col-span-2">
+                          <Leaf className="w-4 h-4 text-green-600" />
+                          <span className="text-gray-900">
+                            CO₂ Emission: {co2Emission} kg
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })}
+              </div>
+            ) : (
+              <div className="text-gray-900 text-center">
+                Enter source and destination to see available routes
+              </div>
+            )}
+          </div>
+          )}
+        </div>
+>>>>>>> 8d9c6289 (Initial commit)
       </form>
     </div>
   );
