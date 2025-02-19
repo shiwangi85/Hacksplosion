@@ -1,13 +1,6 @@
-<<<<<<< HEAD
-
-import React, { useState, useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
-import { Car, Bike, Truck, Clock, Leaf, Shield, Ship, Wallet, Trees, Footprints } from "lucide-react";
-=======
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { Car, Bike, Truck, Clock, Leaf, Shield, Ship, Wallet, Trees, Footprints ,Route , Navigation} from "lucide-react";
->>>>>>> 8d9c6289 (Initial commit)
 import axios from "axios";
 
 // Add type declaration for window.mappls
@@ -17,17 +10,12 @@ declare global {
   }
 }
 
-<<<<<<< HEAD
-// const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
-const MAPPLS_API_KEY = "261eece0-1092-4aea-980c-ba48a9a99542";
-=======
 const getActiveVehicle = () => {
   const activeVehicle = localStorage.getItem('activeVehicle');
   return activeVehicle ? JSON.parse(activeVehicle) : null;
 };
 // const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
 const MAPPLS_API_KEY = "e9734494-bfbc-4d7e-9778-aeca681775f3";
->>>>>>> 8d9c6289 (Initial commit)
 
 // Add these interfaces at the top of the file
 interface Location {
@@ -57,18 +45,6 @@ const VehicleOption = ({
   <button
     type="button"
     onClick={onClick}
-<<<<<<< HEAD
-    className={`p-4 border rounded-lg flex flex-col items-center ${
-      selected
-        ? "border-blue-500 bg-blue-50"
-        : "border-gray-300 hover:border-blue-500"
-    }`}
-  >
-    {icon}
-    <span className="mt-2 text-sm font-medium">{label}</span>
-  </button>
-);
-=======
     className={`
       flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-200
       ${selected 
@@ -150,19 +126,13 @@ const LocationInput = ({
 );
 
 
->>>>>>> 8d9c6289 (Initial commit)
 
 // -------------- Main Component starts here --------------
 const RouteInput = () => {
   const navigate = useNavigate();
   const [vehicleType, setVehicleType] = useState("car");
-<<<<<<< HEAD
-  const [routeType, setRouteType] = useState("fastest");
-  const [routeData, setRouteData] = useState(null);
-=======
   // const [routeType, setRouteType] = useState("fastest");
   // const [routeData, setRouteData] = useState(null);
->>>>>>> 8d9c6289 (Initial commit)
   const [routeRequested, setRouteRequested] = useState(false); // this is for request tot get route after i vclick to button
 
   // Add new state variables
@@ -249,19 +219,6 @@ const RouteInput = () => {
     });
   };
 
-<<<<<<< HEAD
-  // ------------------------------ Create Map Initialization function here ------------------------------
-  const initializeMap = (startLoc: any, destinationLoc: any) => {
-    if (mapRef.current) {
-      // Clear existing map data
-      if (startMarkerRef.current) startMarkerRef.current.remove();
-      if (destinationMarkerRef.current) destinationMarkerRef.current.remove();
-      mapRef.current.remove();
-    }
-
-    let center: { lat: number; lng: number } = { lat: 28.6139, lng: 77.209 }; // Default center
-
-=======
   const initializeMap = (startLoc: any, destinationLoc: any) => {
     if (mapRef.current) {
       // Clear existing map data
@@ -279,17 +236,12 @@ const RouteInput = () => {
   
     let center: { lat: number; lng: number } = { lat: 28.6139, lng: 77.209 }; // Default center
   
->>>>>>> 8d9c6289 (Initial commit)
     if (startLoc) {
       center = startLoc;
     } else if (destinationLoc) {
       center = destinationLoc;
     }
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 8d9c6289 (Initial commit)
     const mapInstance = new window.MapmyIndia.Map("map", {
       center: center,
       zoom: 12,
@@ -297,11 +249,7 @@ const RouteInput = () => {
       hybrid: false,
     });
     mapRef.current = mapInstance;
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 8d9c6289 (Initial commit)
     if (startLoc) {
       const newStartMarker = new window.MapmyIndia.Marker({
         map: mapInstance,
@@ -310,11 +258,7 @@ const RouteInput = () => {
       });
       startMarkerRef.current = newStartMarker;
     }
-<<<<<<< HEAD
-
-=======
   
->>>>>>> 8d9c6289 (Initial commit)
     if (destinationLoc) {
       const newDestinationMarker = new window.MapmyIndia.Marker({
         map: mapInstance,
@@ -325,11 +269,7 @@ const RouteInput = () => {
     }
   };
 
-<<<<<<< HEAD
-  //  ---------------------- Fetch current location using geolocation api  ------------------------------
-=======
   //  ---------------------- Fetch current location using geoloNavigationcation api  ------------------------------
->>>>>>> 8d9c6289 (Initial commit)
   const fetchCurrentLocation = () => {
     if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition(
@@ -507,11 +447,8 @@ const RouteInput = () => {
     }
   }, [routeRequested]); // Trigger fetch only when button is clicked
 
-<<<<<<< HEAD
-=======
   const activeVehicle = getActiveVehicle();
   
->>>>>>> 8d9c6289 (Initial commit)
   // ---------------------- Return the main UI here ----------------------
   return (
     <div className="w-full px-4 py-8">
@@ -525,11 +462,7 @@ const RouteInput = () => {
               htmlFor="source"
               className="block text-sm font-medium text-gray-700"
             >
-<<<<<<< HEAD
-              Starting Point {/* Source Input Field */}
-=======
               Starting Point 
->>>>>>> 8d9c6289 (Initial commit)
             </label>
 
             {/* this is for input current suggestion  */}
@@ -550,11 +483,7 @@ const RouteInput = () => {
                 onClick={fetchCurrentLocation}
                 className="ml-2 px-3 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600"
               >
-<<<<<<< HEAD
-                📍 Use Current Location {/* Current Location Button */}
-=======
                 📍 Use Current Location 
->>>>>>> 8d9c6289 (Initial commit)
               </button>
             </div>
 
@@ -677,11 +606,7 @@ const RouteInput = () => {
         </div>
 
         {/* -------------------------- Submit Button ---------------------------- */}
-<<<<<<< HEAD
-        <button
-=======
         {/* <button
->>>>>>> 8d9c6289 (Initial commit)
           type="submit"
           onClick={(e) => {
             e.preventDefault();
@@ -693,12 +618,6 @@ const RouteInput = () => {
           }}
           className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
-<<<<<<< HEAD
-          Get Route
-        </button>
-
-        <div id="map" style={{ width: "100%", height: "500px" }}></div>
-=======
           <Navigation size={20} />
           <span>Get Route</span>
         </button> */}
@@ -796,7 +715,6 @@ const RouteInput = () => {
           </div>
           )}
         </div>
->>>>>>> 8d9c6289 (Initial commit)
       </form>
     </div>
   );
