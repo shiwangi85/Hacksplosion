@@ -8,6 +8,9 @@ import { set } from 'mongoose';
 import MapComponent from './MapComponent';
 import RouteInput from './RouteInput';
 
+
+
+
 const data = [
   { name: 'Mon', optimization: 65, emergency: 12 },
   { name: 'Tue', optimization: 72, emergency: 8 },
@@ -52,6 +55,10 @@ const stats = [
     iconColor: 'text-rose-400'
   },
 ];
+
+
+
+
 
 const routeOptions = [
   {
@@ -321,18 +328,25 @@ export default function Dashboard() {
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">
-        <h1 className="text-5xl font-extrabold text-gray-800 dark:text-blue-900 font-serif">Command Center</h1>
-        <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-indigo-500/10 border border-indigo-500/20">
-          <Zap className="w-5 h-5 text-indigo-500" />
+        <h1 className="text-5xl font-extrabold bg-gradient-to-r from-indigo-600 via-purple-300 to-pink-400 text-transparent bg-clip-text font-serif">
+          Command Center
+        </h1>
+        <div className="flex items-center gap-3 px-4 py-2 rounded-lg bg-white/20 border border-white/30 shadow-lg backdrop-blur-md">
+          <Zap className="w-5 h-5 text-white" />
           <span className="text-sm font-medium text-indigo-500">System Operating at 98% Efficiency</span>
         </div>
       </div>
 
       <div className="p-6 rounded-xl border-4 border-black-900/30 bg-cream-900/30 backdrop-blur-md">
-        <h2 className="text-3xl font-bold gradient-text mb-6">Route Planner</h2>
+        <h2 className="text-4xl font-bold text-purple-400 mb-6 font-serif text-center">
+          Route Planner
+        </h2>
+        {/* White underline */}
+        <div className="w-full border-b-2 border-purple-400 mb-6"></div>
 
-        <RouteInput/>
+        <RouteInput />
       </div>
+
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat) => {
