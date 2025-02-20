@@ -54,11 +54,9 @@ export default function Navbar() {
               className={`flex items-center gap-3 p-3.5 rounded-lg transition-all duration-300 ${
                 isActive 
                   ? 'bg-indigo-950/20 text-indigo-400' 
-<<<<<<< HEAD
-                  : 'text-white hover:bg-gray-400 hover:text-white'
-=======
+
                   : 'text-white hover:bg-gray-200 hover:text-black'
->>>>>>> 8d9c6289 (Initial commit)
+
               }`}
             >
               <Icon className={`w-5 h-5 ${isActive ? 'text-indigo-400' : ''}`} />
@@ -69,8 +67,5 @@ export default function Navbar() {
       </div>
     </nav>
   );
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 8d9c6289 (Initial commit)

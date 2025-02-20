@@ -10,10 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@rollup/rollup-linux-x64-gnu": "^4.34.1",
-=======
->>>>>>> 8d9c6289 (Initial commit)
+
     "@supabase/supabase-js": "^2.39.7",
     "axios": "^1.7.9",
     "cors": "^2.8.5",

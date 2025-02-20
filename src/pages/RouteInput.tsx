@@ -15,7 +15,7 @@ const getActiveVehicle = () => {
   return activeVehicle ? JSON.parse(activeVehicle) : null;
 };
 // const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
-const MAPPLS_API_KEY = "e9734494-bfbc-4d7e-9778-aeca681775f3";
+const MAPPLS_API_KEY = "bd0be172-d751-4d73-a6ca-8790000798d5";
 
 // Add these interfaces at the top of the file
 interface Location {
@@ -622,7 +622,7 @@ const RouteInput = () => {
           <span>Get Route</span>
         </button> */}
 
-
+{/* 
 <button
   type="submit"
   onClick={(e) => {
@@ -642,9 +642,30 @@ const RouteInput = () => {
 >
   <Navigation size={20} />
   <span>Get Route</span>
+</button> */}
+
+
+
+<button
+  type="submit"
+  onClick={(e) => {
+    e.preventDefault();
+    if (!sourceLocation || !destLocation) {
+      alert("Please select both a starting point and destination!");
+      return;
+    }
+
+    setRouteRequested(true);  // Set state before fetching routes
+    fetchRoute(); // Ensure fetchRoute is called immediately
+  }}
+  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+>
+  <Navigation size={20} />
+  <span>Get Route</span>
 </button>
 
 
+  {/* --------------this is for vaialable route -------------- */}
         <div className="flex flex-row w-full gap-4"> 
           <div id="map" style={{ width: "70%", height: "500px" }}></div>
           {sourceLocation && destLocation && 
@@ -715,6 +736,9 @@ const RouteInput = () => {
           </div>
           )}
         </div>
+
+
+
       </form>
     </div>
   );
