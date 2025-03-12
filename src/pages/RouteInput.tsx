@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import { Car, Bike, Truck, Clock, Leaf, Shield, Ship, Wallet, Trees, Footprints ,Route , Navigation} from "lucide-react";
+import { Car, Bike, Truck, Clock, Leaf, Send, Shield, Ship, Wallet, Trees, Footprints, Route, Navigation, MapPin } from "lucide-react";
 import axios from "axios";
 
 // Add type declaration for window.mappls
@@ -15,7 +15,7 @@ const getActiveVehicle = () => {
   return activeVehicle ? JSON.parse(activeVehicle) : null;
 };
 // const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
-const MAPPLS_API_KEY = "bd0be172-d751-4d73-a6ca-8790000798d5";
+const MAPPLS_API_KEY = "b41dd109-a999-4383-930e-9c8bded58a92";
 
 // Add these interfaces at the top of the file
 interface Location {
@@ -47,7 +47,7 @@ const VehicleOption = ({
     onClick={onClick}
     className={`
       flex flex-col items-center justify-center p-4 rounded-xl transition-all duration-200
-      ${selected 
+      ${selected
         ? 'bg-gradient-to-br from-gray-100 to-white shadow-inner border-none'
         : 'bg-gradient-to-tl from-gray-100 to-white shadow-lg hover:shadow-xl'
       }
@@ -57,11 +57,11 @@ const VehicleOption = ({
       }
     `}
   >
-      <div className={`
+    <div className={`
       mb-2 transform transition-transform duration-200
       ${selected ? 'scale-90 text-purple-600' : 'scale-100 text-gray-600'}
     `}>
-    {icon}
+      {icon}
     </div>
     {/* <span className="mt-2 text-sm font-medium">{label}</span> */}
     <span className={`
@@ -74,15 +74,15 @@ const VehicleOption = ({
   </button>
 );
 //  ----this is for location input css ---------
-const LocationInput = ({ 
-  label, 
-  value, 
-  onChange, 
-  placeholder, 
-  onLocationClick, 
+const LocationInput = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  onLocationClick,
   showLocationButton,
   suggestions,
-  onSuggestionSelect 
+  onSuggestionSelect
 }) => (
   <div className="relative">
     <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -107,7 +107,7 @@ const LocationInput = ({
         </button>
       )}
     </div>
-    
+
     {/* Suggestions Dropdown */}
     {suggestions && suggestions.length > 0 && (
       <div className="absolute z-10 w-full mt-1 bg-white border border-gray-200 rounded-lg shadow-lg max-h-60 overflow-y-auto">
@@ -130,24 +130,20 @@ const LocationInput = ({
 // -------------- Main Component starts here --------------
 const RouteInput = () => {
   const navigate = useNavigate();
-  const [vehicleType, setVehicleType] = useState("car");
-  // const [routeType, setRouteType] = useState("fastest");
-  // const [routeData, setRouteData] = useState(null);
+  const [vehicleType, setVehicleType] = useState(null);
   const [routeRequested, setRouteRequested] = useState(false); // this is for request tot get route after i vclick to button
-
-  // Add new state variables
+  const [availableRoutes, setAvailableRoutes] = useState([]);
   const [sourceQuery, setSourceQuery] = useState("");
   const [destQuery, setDestQuery] = useState("");
   const [sourceSuggestions, setSourceSuggestions] = useState<LocationSuggestion[]>([]);
   const [destSuggestions, setDestSuggestions] = useState<LocationSuggestion[]>([]);
-
-  // Add new state for storing selected locations
   const [sourceLocation, setSourceLocation] = useState<Location | null>(null);
   const [destLocation, setDestLocation] = useState<Location | null>(null);
-
   const mapRef = useRef<any>(null);
   const startMarkerRef = useRef<any>(null);
   const destinationMarkerRef = useRef<any>(null);
+  const [selectedRoute, setSelectedRoute] = useState(null); // Store selected route
+
 
   // ----------------------- For Destination -------------------------
   //  fetchAddressSuggestions to return full location data
@@ -221,27 +217,19 @@ const RouteInput = () => {
 
   const initializeMap = (startLoc: any, destinationLoc: any) => {
     if (mapRef.current) {
-      // Clear existing map data
-      if (startMarkerRef.current) {
-        startMarkerRef.current.remove();
-        startMarkerRef.current = null;
-      }
-      if (destinationMarkerRef.current) {
-        destinationMarkerRef.current.remove();
-        destinationMarkerRef.current = null;
-      }
       mapRef.current.remove();
       mapRef.current = null;
     }
-  
+
     let center: { lat: number; lng: number } = { lat: 28.6139, lng: 77.209 }; // Default center
-  
+
     if (startLoc) {
       center = startLoc;
     } else if (destinationLoc) {
       center = destinationLoc;
     }
-  
+
+
     const mapInstance = new window.MapmyIndia.Map("map", {
       center: center,
       zoom: 12,
@@ -249,25 +237,44 @@ const RouteInput = () => {
       hybrid: false,
     });
     mapRef.current = mapInstance;
-  
+
+    // ✅ Enable Traffic Overlays (Red, Green, and Closure)
+    mapInstance.isTrafficEnabled = true;  // Enable all traffic layers
+    mapInstance.isClosureTrafficEnabled = true;  // Show road closures
+    mapInstance.isFreeFlowTrafficEnabled = true;  // Show green roads (free-flowing)
+    mapInstance.isNonFreeFlowTrafficEnabled = true;  // Show red/orange roads (traffic congestion)
+    mapInstance.isStopIconTrafficEnabled = true;  // Show stop icon for major blocks
+
+
+    // Remove existing markers before adding new ones
+    if (startMarkerRef.current) {
+      startMarkerRef.current.remove();
+      startMarkerRef.current = null;
+    }
+    if (destinationMarkerRef.current) {
+      destinationMarkerRef.current.remove();
+      destinationMarkerRef.current = null;
+    }
+
+
+
     if (startLoc) {
-      const newStartMarker = new window.MapmyIndia.Marker({
+      startMarkerRef.current = new window.MapmyIndia.Marker({
         map: mapInstance,
         position: startLoc,
         draggable: false,
       });
-      startMarkerRef.current = newStartMarker;
     }
-  
+
     if (destinationLoc) {
-      const newDestinationMarker = new window.MapmyIndia.Marker({
+      destinationMarkerRef.current = new window.MapmyIndia.Marker({
         map: mapInstance,
         position: destinationLoc,
         draggable: false,
       });
-      destinationMarkerRef.current = newDestinationMarker;
     }
   };
+
 
   //  ---------------------- Fetch current location using geoloNavigationcation api  ------------------------------
   const fetchCurrentLocation = () => {
@@ -307,15 +314,15 @@ const RouteInput = () => {
     if (window.MapmyIndia && (sourceLocation || destLocation)) {
       const startLoc = sourceLocation
         ? {
-            lat: parseFloat(sourceLocation.lat),
-            lng: parseFloat(sourceLocation.lon),
-          }
+          lat: parseFloat(sourceLocation.lat),
+          lng: parseFloat(sourceLocation.lon),
+        }
         : null;
       const destinationLoc = destLocation
         ? {
-            lat: parseFloat(destLocation.lat),
-            lng: parseFloat(destLocation.lon),
-          }
+          lat: parseFloat(destLocation.lat),
+          lng: parseFloat(destLocation.lon),
+        }
         : null;
       initializeMap(startLoc, destinationLoc);
     } else if (!window.MapmyIndia) {
@@ -326,15 +333,15 @@ const RouteInput = () => {
       script.onload = () => {
         const startLoc = sourceLocation
           ? {
-              lat: parseFloat(sourceLocation.lat),
-              lng: parseFloat(sourceLocation.lon),
-            }
+            lat: parseFloat(sourceLocation.lat),
+            lng: parseFloat(sourceLocation.lon),
+          }
           : null;
         const destinationLoc = destLocation
           ? {
-              lat: parseFloat(destLocation.lat),
-              lng: parseFloat(destLocation.lon),
-            }
+            lat: parseFloat(destLocation.lat),
+            lng: parseFloat(destLocation.lon),
+          }
           : null;
         initializeMap(startLoc, destinationLoc);
       };
@@ -391,15 +398,15 @@ const RouteInput = () => {
       }
 
 
-       const profileMap: Record<string, string> = {
-            car: "driving",
-            bike: "biking",
-            truck: "trucking",
-            walking: "walking",
-          };
-      
-          const selectedProfile = profileMap[vehicleType] || "driving"; // Default to driving
-      
+      const profileMap: Record<string, string> = {
+        car: "driving",
+        bike: "biking",
+        truck: "trucking",
+        walking: "walking",
+      };
+
+      const selectedProfile = profileMap[vehicleType] || "driving"; // Default to driving
+
 
       // Initialize direction plugin
       if (mapRef.current && sourceLocation && destLocation) {
@@ -411,7 +418,7 @@ const RouteInput = () => {
           // Profile:['driving','biking','trucking','walking'],
 
 
-          Profile: selectedProfile,  
+          Profile: selectedProfile,
 
           routeLineColor: "black",
           start: {
@@ -432,12 +439,25 @@ const RouteInput = () => {
         window.mappls.direction(directionOptions, function (data: any) {
           directionPluginRef.current = data;
           console.log("Direction plugin initialized:", data);
+
+          updateAvailableRoutes(data);
         });
       }
     } catch (error) {
       console.error("Error initializing map or directions:", error);
     }
   };
+
+
+
+  const updateAvailableRoutes = (routeData = null) => {
+    if (!routeData) return;
+
+    // Update state or re-render component to show available routes
+    setAvailableRoutes(routeData.routes || []);
+  };
+
+
 
   // ---------this will ensure that after click on button it give route
   useEffect(() => {
@@ -448,25 +468,66 @@ const RouteInput = () => {
   }, [routeRequested]); // Trigger fetch only when button is clicked
 
   const activeVehicle = getActiveVehicle();
-  
+
+  const calculateGreenScore = (co2Emission) => {
+    // Example calculation: lower CO₂ emission results in a higher green score
+    const maxScore = 100;
+    const minScore = 0;
+    const maxEmission = 100; // Example max emission value for scaling
+    const greenScore = maxScore - (co2Emission / maxEmission) * maxScore;
+    return Math.max(minScore, Math.min(maxScore, greenScore.toFixed(2)));
+  };
+
+  const saveRouteToMetrics = (route: any) => {
+    const metrics = JSON.parse(localStorage.getItem('sustainabilityMetrics') || '[]');
+    const distance = parseFloat(route.distance); // Distance in km
+    const mileage = parseFloat(activeVehicle.veh_mileage); // Vehicle mileage in km/l
+    const fuelType = activeVehicle.fuel_type.toLowerCase();
+
+    // Emission factor based on fuel type
+    const emissionFactors = {
+      petrol: 2.31,
+      diesel: 2.68,
+      cng: 2.75,
+    };
+
+    const co2Emission = mileage
+      ? ((distance / mileage) * (emissionFactors[fuelType] || 2.31)).toFixed(2)
+      : 'N/A'; // Default to Petrol if fuel type is unknown
+
+    const greenScore = calculateGreenScore(co2Emission);
+
+    const newMetric = {
+      id: (metrics.length + 1).toString(),
+      date: new Date().toISOString().split('T')[0],
+      co2Saved: parseFloat(co2Emission), // Assuming distance is in km
+      energyEfficiency: 90, // Placeholder value
+      greenScore: parseFloat(greenScore), // Calculated green score
+      created_at: new Date().toISOString()
+    };
+    metrics.unshift(newMetric); // Add new metric to the beginning of the array
+    localStorage.setItem('sustainabilityMetrics', JSON.stringify(metrics));
+  };
+
   // ---------------------- Return the main UI here ----------------------
   return (
     <div className="w-full px-4 py-8">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8">Plan Your Route</h1>
-
       <form className="space-y-6">
         {/* Location Inputs */}
         <div className="space-y-4">
           <div className="relative">
             <label
               htmlFor="source"
-              className="block text-sm font-medium text-gray-700"
+              className="text-purple-500 font-bold text-xl"
             >
-              Starting Point 
+              Starting Point
             </label>
 
-            {/* this is for input current suggestion  */}
-            <div className="flex">
+            <div className="relative flex items-center">
+              {/* Location Icon */}
+              <MapPin className="absolute left-3 w-5 h-5 text-gray-500" />
+
+              {/* Input Field */}
               <input
                 type="text"
                 id="source"
@@ -475,25 +536,29 @@ const RouteInput = () => {
                   setSourceQuery(e.target.value);
                   setSourceLocation(null);
                 }}
-                className="mt-1 block w-full rounded-md border-gray-900 shadow-sm focus:border-blue-500 focus:ring-blue-500 text-pink-900"
+
+                className="mt-1 block w-full px-6 py-4 pl-10 rounded-xl border-2 border-gray-300  text-black
+              focus:border-purple-700 focus:ring-4 focus:ring-purple-300 focus:bg-white focus:outline-none transition duration-200 ease-in-out"
                 placeholder="Enter starting location "
               />
               <button
                 type="button"
                 onClick={fetchCurrentLocation}
-                className="ml-2 px-3 py-2 bg-blue-500 text-white rounded-md shadow-sm hover:bg-blue-600"
+                className="absolute right-2 px-3 py-1 bg-purple-100 text-white rounded-md shadow-sm hover:bg-purple-200 text-sm"
               >
-                📍 Use Current Location 
+                {/* <Send className="w-6 h-6 text-purple-500" /> */}
+                <Send className="w-6 h-6 text-purple-500" />
               </button>
             </div>
 
+
             {/* -------------------------- Display suggestions for source location ------------------------------- */}
             {sourceSuggestions.length > 0 && !sourceLocation && (
-              <div className="absolute z-10 w-full bg-black mt-1 border border-gray-900 rounded-md shadow-lg">
+              <div className="absolute z-10 w-full text-black bg-white mt-1 border border-gray-900 rounded-md shadow-lg">
                 {sourceSuggestions.map((suggestion) => (
                   <div
                     key={suggestion.place_id}
-                    className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+                    className="px-4 py-2  hover:text-white hover:bg-gray-900  cursor-pointer"
                     onClick={() => {
                       setSourceQuery(suggestion.display_name);
                       setSourceLocation({
@@ -513,12 +578,15 @@ const RouteInput = () => {
 
           {/*-------------------------------- Destination Input Field ---------------------------*/}
           <div className="relative">
+
+
             <label
               htmlFor="destination"
-              className="block text-sm font-medium text-gray-700"
+              className="text-purple-500 font-bold text-xl"
             >
               Destination
             </label>
+            <MapPin className="absolute left-4 w-5 h-5 text-gray-500" />
             <input
               type="text"
               id="destination"
@@ -527,7 +595,8 @@ const RouteInput = () => {
                 setDestQuery(e.target.value);
                 setDestLocation(null);
               }}
-              className="mt-1 block w-full rounded-md border-gray-900 shadow-sm focus:border-blue-900 focus:ring-blue-500 text-pink-900"
+              className="mt-1 block w-full px-6 py-4 pl-10 rounded-xl border-2 border-gray-300  text-black
+              focus:border-purple-700 focus:ring-4 focus:ring-purple-300 focus:bg-white focus:outline-none transition duration-200 ease-in-out"
               placeholder="Enter destination"
             />
 
@@ -558,18 +627,19 @@ const RouteInput = () => {
 
         {/* Vehicle Type Selection */}
         <div className="text-black">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
+          <label className="text-purple-500 font-bold text-xl">
             Vehicle Type
           </label>
-          <div className="grid grid-cols-3 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <VehicleOption
-              icon={<Car className="h-6 w-6 " />}
+              icon={<Car size={24} />}
               label="Car"
               selected={vehicleType === "car"}
               // onClick={() => setVehicleType("car")}
               onClick={() => {
                 setVehicleType("car");
                 fetchRoute();  // Call fetchRoute to update the route and map profile
+                updateAvailableRoutes();
               }}
             />
             <VehicleOption
@@ -580,6 +650,7 @@ const RouteInput = () => {
               onClick={() => {
                 setVehicleType("bike");
                 fetchRoute();  // Update map profile on selection change
+                updateAvailableRoutes();
               }}
             />
             <VehicleOption
@@ -590,6 +661,7 @@ const RouteInput = () => {
               onClick={() => {
                 setVehicleType("truck");
                 fetchRoute();  // Update map profile on selection change
+                updateAvailableRoutes();
               }}
             />
             <VehicleOption
@@ -599,14 +671,18 @@ const RouteInput = () => {
               // onClick={() => setVehicleType("Walking")}
               onClick={() => {
                 setVehicleType("walking");
-                fetchRoute();  // Update map profile on selection change
+
+                updateAvailableRoutes(); fetchRoute();  // Update map profile on selection change
               }}
-            /> 
+            />
           </div>
         </div>
 
-        {/* -------------------------- Submit Button ---------------------------- */}
-        {/* <button
+
+
+
+
+        <button
           type="submit"
           onClick={(e) => {
             e.preventDefault();
@@ -614,127 +690,123 @@ const RouteInput = () => {
               alert("Please select both a starting point and destination!");
               return;
             }
-            setRouteRequested(true);
+
+            setRouteRequested(true);  // Set state before fetching routes
+            fetchRoute(); // Ensure fetchRoute is called immediately
+            updateAvailableRoutes(); // Call function to update right-side route list
           }}
           className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
         >
           <Navigation size={20} />
           <span>Get Route</span>
-        </button> */}
+        </button>
 
-{/* 
-<button
-  type="submit"
-  onClick={(e) => {
-    e.preventDefault();
-    if (!sourceLocation || !destLocation) {
-      alert("Please select both a starting point and destination!");
-      return;
-    }
 
-    setRouteRequested(true);  // Update state
-
-    setTimeout(() => {
-      fetchRoute(); // Ensure fetchRoute runs immediately
-    }, 0);
-  }}
-  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
->
-  <Navigation size={20} />
-  <span>Get Route</span>
-</button> */}
+     {/* route prefrence acc to co2 emission and time  */}
+ 
 
 
 
-<button
-  type="submit"
-  onClick={(e) => {
-    e.preventDefault();
-    if (!sourceLocation || !destLocation) {
-      alert("Please select both a starting point and destination!");
-      return;
-    }
-
-    setRouteRequested(true);  // Set state before fetching routes
-    fetchRoute(); // Ensure fetchRoute is called immediately
-  }}
-  className="w-full flex justify-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
->
-  <Navigation size={20} />
-  <span>Get Route</span>
-</button>
-
-
-  {/* --------------this is for vaialable route -------------- */}
-        <div className="flex flex-row w-full gap-4"> 
+        {/* --------------this is for vaialable route -------------- */}
+        <div className="flex flex-row w-full gap-4 text-black">
           <div id="map" style={{ width: "70%", height: "500px" }}></div>
-          {sourceLocation && destLocation && 
-          (<div className="w-[30%] p-4 bg-white rounded-lg shadow overflow-auto">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900">Available Routes</h2>
-            {directionPluginRef.current?.data ? (
-              <div className="space-y-4">
-                {Array.from({ length: directionPluginRef.current.data.length }, (_, i) => {
-                  const distance = parseFloat(directionPluginRef.current.data[i].distance); // Distance in km
-                  const mileage = parseFloat(activeVehicle.veh_mileage); // Vehicle mileage in km/l
-                  const fuelType = activeVehicle.fuel_type.toLowerCase();
+          {sourceLocation && destLocation &&
+            (<div className="w-[30%] p-4 bg-white rounded-lg shadow overflow-auto">
+              <h2 className="text-purple-500 font-bold text-xl">Available Routes</h2>
 
-                  // Emission factor based on fuel type
-                  const emissionFactors = {
-                    petrol: 2.31,
-                    diesel: 2.68,
-                    cng: 2.75,
-                  };
 
-                  const co2Emission = mileage
-                    ? ((distance / mileage) * (emissionFactors[fuelType] || 2.31)).toFixed(2)
-                    : 'N/A'; // Default to Petrol if fuel type is unknown
 
-                  return (
-                    <div 
-                      key={i}
-                      className="p-4 border border-gray-900 rounded-lg hover:border-blue-500 cursor-pointer transition-colors"
-                    >
-                      <div className="flex items-center justify-between mb-2">
-                        <span className="font-medium text-gray-900">Route {i + 1}</span>
-                        <span className="text-sm text-gray-900">
-                          {directionPluginRef.current.data[i].routeName || `Route ${i + 1}`}
-                        </span>
-                      </div>
-                      <div className="grid grid-cols-2 gap-4">
-                        <div className="flex items-center space-x-2">
+{directionPluginRef.current?.data ? (() => {
+    const routes = directionPluginRef.current.data.map((route, i) => {
+        const distance = parseFloat(route.distance);
+        const mileage = parseFloat(activeVehicle.veh_mileage);
+        const fuelType = activeVehicle.fuel_type.toLowerCase();
+        
+        const emissionFactors = {
+            petrol: 2.31,
+            diesel: 2.68,
+            cng: 2.75,
+        };
+        
+        const co2Emission = mileage
+            ? ((distance / mileage) * (emissionFactors[fuelType] || 2.31)).toFixed(2)
+            : 'N/A';
+        
+        return { ...route, index: i, distance, co2Emission: parseFloat(co2Emission) };
+    });
+
+    // Find the preferred route (lowest CO₂ emission, then shortest time)
+    const preferredRoute = routes.reduce((best, current) => {
+        if (
+            current.co2Emission < best.co2Emission || 
+            (current.co2Emission === best.co2Emission && parseInt(current.eta) < parseInt(best.eta))
+        ) {
+            return current;
+        }
+        return best;
+    }, routes[0]);
+
+  
+
+    return (
+      <div className="space-y-4">
+          {/* Available Routes */}
+          {routes.map((route) => (
+              <div
+                  key={route.index}
+                  className={`p-4 border rounded-lg cursor-pointer transition-colors relative ${
+                      route.index === preferredRoute.index
+                          ? "border-green-500 bg-green-50 shadow-lg"  // Highlight best route
+                          : "border-gray-900 hover:border-blue-500"
+                  }`}
+                  onClick={() => saveRouteToMetrics(route)}
+              >
+                  <div className="flex items-center justify-between mb-2 text-cyan-500">
+                      <span className="font-medium text-gray-900">Route {route.index + 1}</span>
+                      <span className="text-sm text-gray-900">{route.routeName || `Route ${route.index + 1}`}</span>
+  
+                      {/* Preferred Route Badge */}
+                      {route.index === preferredRoute.index && (
+                          <span className="absolute top-2 right-2 bg-green-500 text-white text-xs font-semibold px-2 py-1 rounded-md">
+                              Preferred
+                          </span>
+                      )}
+                  </div>
+  
+                  <div className="grid grid-cols-2 gap-4">
+                      <div className="flex items-center space-x-2">
                           <Route className="w-4 h-4 text-gray-900" />
-                          <span className="text-gray-900">
-                            {distance} km
-                          </span>
-                        </div>
-                    
-
-
-<div className="flex items-center space-x-2">
-  <Clock className="w-4 h-4 text-gray-900" />
-  <span className="text-gray-900">
-  {directionPluginRef.current.data[i].eta.replace(/<[^>]*>/g, "")}
-  </span>
-</div>
-                     
-                        <div className="flex items-center space-x-2 col-span-2">
-                          <Leaf className="w-4 h-4 text-green-600" />
-                          <span className="text-gray-900">
-                            CO₂ Emission: {co2Emission} kg
-                          </span>
-                        </div>
+                          <span className="text-gray-900">{route.distance} km</span>
                       </div>
-                    </div>
-                  );
-                })}
+                      <div className="flex items-center space-x-2">
+                          <Clock className="w-4 h-4 text-gray-900" />
+                          <span className="text-gray-900">{route.eta.replace(/<[^>]*>/g, "")}</span>
+                      </div>
+                      <div className="flex items-center space-x-2 col-span-2">
+                          <Leaf className="w-4 h-4 text-green-800 shadow-xl border-4 rounded-md drop-shadow-[0_0_5px_rgba(34,187,94,0.8)] " />
+                          <span className="text-gray-900">CO₂ Emission: {route.co2Emission} kg</span>
+                      </div>
+                  </div>
               </div>
-            ) : (
-              <div className="text-gray-900 text-center">
-                Enter source and destination to see available routes
-              </div>
+          ))}
+      </div>
+  );
+  
+
+
+
+
+    
+})() : (
+    <div className="text-gray-900 text-center">
+        Enter source and destination to see available routes
+    </div>
+)}
+
+
+
+            </div>
             )}
-          </div>
-          )}
         </div>
 
 
@@ -745,3 +817,7 @@ const RouteInput = () => {
 };
 
 export default RouteInput;
+
+
+
+

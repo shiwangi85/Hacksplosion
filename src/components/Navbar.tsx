@@ -7,17 +7,20 @@ import {
   Trophy, 
   LineChart, 
   Blocks, 
-  Leaf 
+  Leaf, 
+  ShipWheel
 } from 'lucide-react';
 
 const navItems = [
   { path: '/', label: 'Dashboard', icon: LayoutDashboard },
+  
   { path: '/vehicles', label: 'Vehicles', icon: Car },
   { path: '/emergency', label: 'Emergency', icon: Siren },
   { path: '/gamification', label: 'Gamification', icon: Trophy },
-  { path: '/analytics', label: 'Analytics', icon: LineChart },
+   { path: '/sustainability', label: 'Sustainability', icon: Leaf },
+    { path: '/analytics', label: 'Analytics', icon: LineChart },
   { path: '/blockchain', label: 'Blockchain', icon: Blocks },
-  { path: '/sustainability', label: 'Sustainability', icon: Leaf },
+{ path: '/Shipment', label: 'Shipment', icon: ShipWheel },
 ];
 
 export default function Navbar() {

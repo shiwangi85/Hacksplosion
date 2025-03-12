@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-import connectDB from './db/conn.js';
+// import connectDB from './db/conn.js';
 
 dotenv.config(); // Load environment variables
 

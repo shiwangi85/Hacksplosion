@@ -1,27 +1,15 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Leaf, Droplet, Wind } from 'lucide-react';
 import { SustainabilityMetric } from '../types';
 
-const metrics: SustainabilityMetric[] = [
-  {
-    id: '1',
-    date: '2024-03-01',
-    co2Saved: 125.5,
-    energyEfficiency: 89.2,
-    greenScore: 92,
-    created_at: new Date().toISOString()
-  },
-  {
-    id: '2',
-    date: '2024-03-02',
-    co2Saved: 132.8,
-    energyEfficiency: 91.5,
-    greenScore: 94,
-    created_at: new Date().toISOString()
-  }
-];
+const Sustainability = () => {
+  const [metrics, setMetrics] = useState<SustainabilityMetric[]>([]);
 
-export default function Sustainability() {
+  useEffect(() => {
+    const storedMetrics = JSON.parse(localStorage.getItem('sustainabilityMetrics') || '[]');
+    setMetrics(storedMetrics);
+  }, []);
+
   return (
     <div className="space-y-6">
       <h1 className="text-3xl font-bold text-blue-400">Sustainability Impact</h1>
@@ -30,17 +18,23 @@ export default function Sustainability() {
         <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
           <Leaf className="w-8 h-8 text-green-400 mb-2" />
           <h3 className="font-semibold text-white">CO₂ Saved</h3>
-          <p className="text-2xl font-bold text-green-400">258.3 tons</p>
+          <p className="text-2xl font-bold text-green-400">
+            {metrics.reduce((total, metric) => total + metric.co2Saved, 0).toFixed(2)} kg
+          </p>
         </div>
         <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
           <Droplet className="w-8 h-8 text-blue-400 mb-2" />
           <h3 className="font-semibold text-white">Energy Efficiency</h3>
-          <p className="text-2xl font-bold text-blue-400">90.35%</p>
+          <p className="text-2xl font-bold text-blue-400">
+            {metrics.length > 0 ? (metrics.reduce((total, metric) => total + metric.energyEfficiency, 0) / metrics.length).toFixed(2) : 0}%
+          </p>
         </div>
         <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
           <Wind className="w-8 h-8 text-purple-400 mb-2" />
           <h3 className="font-semibold text-white">Green Score</h3>
-          <p className="text-2xl font-bold text-purple-400">93</p>
+          <p className="text-2xl font-bold text-purple-400">
+            {metrics.length > 0 ? (metrics.reduce((total, metric) => total + metric.greenScore, 0) / metrics.length).toFixed(2) : 0}
+          </p>
         </div>
       </div>
 
@@ -69,4 +63,6 @@ export default function Sustainability() {
       </div>
     </div>
   );
-}
+};
+
+export default Sustainability;

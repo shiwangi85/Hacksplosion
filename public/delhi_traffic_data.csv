@@ -1,0 +1,361 @@
+location_start,location_end,time_of_day,average_travel_time
+Lajpat Nagar,Chandni Chowk,Morning,32
+Lajpat Nagar,Chandni Chowk,Afternoon,20
+Lajpat Nagar,Chandni Chowk,Evening,27
+Lajpat Nagar,Chandni Chowk,Night,15
+Lajpat Nagar,Connaught Place,Morning,43
+Lajpat Nagar,Connaught Place,Afternoon,33
+Lajpat Nagar,Connaught Place,Evening,38
+Lajpat Nagar,Connaught Place,Night,25
+Lajpat Nagar,Saket,Morning,42
+Lajpat Nagar,Saket,Afternoon,28
+Lajpat Nagar,Saket,Evening,27
+Lajpat Nagar,Saket,Night,22
+Lajpat Nagar,Karol Bagh,Morning,39
+Lajpat Nagar,Karol Bagh,Afternoon,31
+Lajpat Nagar,Karol Bagh,Evening,50
+Lajpat Nagar,Karol Bagh,Night,22
+Lajpat Nagar,Dwarka,Morning,25
+Lajpat Nagar,Dwarka,Afternoon,23
+Lajpat Nagar,Dwarka,Evening,31
+Lajpat Nagar,Dwarka,Night,22
+Lajpat Nagar,Rohini,Morning,38
+Lajpat Nagar,Rohini,Afternoon,21
+Lajpat Nagar,Rohini,Evening,36
+Lajpat Nagar,Rohini,Night,18
+Lajpat Nagar,Vasant Kunj,Morning,29
+Lajpat Nagar,Vasant Kunj,Afternoon,28
+Lajpat Nagar,Vasant Kunj,Evening,37
+Lajpat Nagar,Vasant Kunj,Night,13
+Lajpat Nagar,Nehru Place,Morning,28
+Lajpat Nagar,Nehru Place,Afternoon,27
+Lajpat Nagar,Nehru Place,Evening,37
+Lajpat Nagar,Nehru Place,Night,15
+Lajpat Nagar,Greater Kailash,Morning,34
+Lajpat Nagar,Greater Kailash,Afternoon,20
+Lajpat Nagar,Greater Kailash,Evening,43
+Lajpat Nagar,Greater Kailash,Night,16
+Chandni Chowk,Lajpat Nagar,Morning,39
+Chandni Chowk,Lajpat Nagar,Afternoon,25
+Chandni Chowk,Lajpat Nagar,Evening,27
+Chandni Chowk,Lajpat Nagar,Night,22
+Chandni Chowk,Connaught Place,Morning,36
+Chandni Chowk,Connaught Place,Afternoon,34
+Chandni Chowk,Connaught Place,Evening,37
+Chandni Chowk,Connaught Place,Night,15
+Chandni Chowk,Saket,Morning,26
+Chandni Chowk,Saket,Afternoon,31
+Chandni Chowk,Saket,Evening,48
+Chandni Chowk,Saket,Night,19
+Chandni Chowk,Karol Bagh,Morning,27
+Chandni Chowk,Karol Bagh,Afternoon,32
+Chandni Chowk,Karol Bagh,Evening,29
+Chandni Chowk,Karol Bagh,Night,14
+Chandni Chowk,Dwarka,Morning,32
+Chandni Chowk,Dwarka,Afternoon,18
+Chandni Chowk,Dwarka,Evening,44
+Chandni Chowk,Dwarka,Night,12
+Chandni Chowk,Rohini,Morning,31
+Chandni Chowk,Rohini,Afternoon,31
+Chandni Chowk,Rohini,Evening,50
+Chandni Chowk,Rohini,Night,20
+Chandni Chowk,Vasant Kunj,Morning,40
+Chandni Chowk,Vasant Kunj,Afternoon,17
+Chandni Chowk,Vasant Kunj,Evening,48
+Chandni Chowk,Vasant Kunj,Night,21
+Chandni Chowk,Nehru Place,Morning,39
+Chandni Chowk,Nehru Place,Afternoon,27
+Chandni Chowk,Nehru Place,Evening,40
+Chandni Chowk,Nehru Place,Night,18
+Chandni Chowk,Greater Kailash,Morning,34
+Chandni Chowk,Greater Kailash,Afternoon,28
+Chandni Chowk,Greater Kailash,Evening,30
+Chandni Chowk,Greater Kailash,Night,10
+Connaught Place,Lajpat Nagar,Morning,22
+Connaught Place,Lajpat Nagar,Afternoon,32
+Connaught Place,Lajpat Nagar,Evening,30
+Connaught Place,Lajpat Nagar,Night,20
+Connaught Place,Chandni Chowk,Morning,20
+Connaught Place,Chandni Chowk,Afternoon,21
+Connaught Place,Chandni Chowk,Evening,37
+Connaught Place,Chandni Chowk,Night,23
+Connaught Place,Saket,Morning,32
+Connaught Place,Saket,Afternoon,26
+Connaught Place,Saket,Evening,42
+Connaught Place,Saket,Night,25
+Connaught Place,Karol Bagh,Morning,35
+Connaught Place,Karol Bagh,Afternoon,20
+Connaught Place,Karol Bagh,Evening,34
+Connaught Place,Karol Bagh,Night,22
+Connaught Place,Dwarka,Morning,43
+Connaught Place,Dwarka,Afternoon,22
+Connaught Place,Dwarka,Evening,40
+Connaught Place,Dwarka,Night,12
+Connaught Place,Rohini,Morning,37
+Connaught Place,Rohini,Afternoon,21
+Connaught Place,Rohini,Evening,43
+Connaught Place,Rohini,Night,19
+Connaught Place,Vasant Kunj,Morning,34
+Connaught Place,Vasant Kunj,Afternoon,19
+Connaught Place,Vasant Kunj,Evening,27
+Connaught Place,Vasant Kunj,Night,17
+Connaught Place,Nehru Place,Morning,34
+Connaught Place,Nehru Place,Afternoon,15
+Connaught Place,Nehru Place,Evening,48
+Connaught Place,Nehru Place,Night,11
+Connaught Place,Greater Kailash,Morning,39
+Connaught Place,Greater Kailash,Afternoon,32
+Connaught Place,Greater Kailash,Evening,37
+Connaught Place,Greater Kailash,Night,21
+Saket,Lajpat Nagar,Morning,31
+Saket,Lajpat Nagar,Afternoon,28
+Saket,Lajpat Nagar,Evening,40
+Saket,Lajpat Nagar,Night,21
+Saket,Chandni Chowk,Morning,45
+Saket,Chandni Chowk,Afternoon,24
+Saket,Chandni Chowk,Evening,43
+Saket,Chandni Chowk,Night,25
+Saket,Connaught Place,Morning,44
+Saket,Connaught Place,Afternoon,33
+Saket,Connaught Place,Evening,27
+Saket,Connaught Place,Night,22
+Saket,Karol Bagh,Morning,27
+Saket,Karol Bagh,Afternoon,29
+Saket,Karol Bagh,Evening,50
+Saket,Karol Bagh,Night,19
+Saket,Dwarka,Morning,28
+Saket,Dwarka,Afternoon,18
+Saket,Dwarka,Evening,27
+Saket,Dwarka,Night,16
+Saket,Rohini,Morning,43
+Saket,Rohini,Afternoon,31
+Saket,Rohini,Evening,30
+Saket,Rohini,Night,13
+Saket,Vasant Kunj,Morning,29
+Saket,Vasant Kunj,Afternoon,15
+Saket,Vasant Kunj,Evening,40
+Saket,Vasant Kunj,Night,19
+Saket,Nehru Place,Morning,41
+Saket,Nehru Place,Afternoon,17
+Saket,Nehru Place,Evening,35
+Saket,Nehru Place,Night,10
+Saket,Greater Kailash,Morning,27
+Saket,Greater Kailash,Afternoon,24
+Saket,Greater Kailash,Evening,26
+Saket,Greater Kailash,Night,19
+Karol Bagh,Lajpat Nagar,Morning,41
+Karol Bagh,Lajpat Nagar,Afternoon,20
+Karol Bagh,Lajpat Nagar,Evening,28
+Karol Bagh,Lajpat Nagar,Night,11
+Karol Bagh,Chandni Chowk,Morning,35
+Karol Bagh,Chandni Chowk,Afternoon,24
+Karol Bagh,Chandni Chowk,Evening,50
+Karol Bagh,Chandni Chowk,Night,23
+Karol Bagh,Connaught Place,Morning,29
+Karol Bagh,Connaught Place,Afternoon,23
+Karol Bagh,Connaught Place,Evening,45
+Karol Bagh,Connaught Place,Night,11
+Karol Bagh,Saket,Morning,28
+Karol Bagh,Saket,Afternoon,19
+Karol Bagh,Saket,Evening,28
+Karol Bagh,Saket,Night,13
+Karol Bagh,Dwarka,Morning,42
+Karol Bagh,Dwarka,Afternoon,20
+Karol Bagh,Dwarka,Evening,35
+Karol Bagh,Dwarka,Night,14
+Karol Bagh,Rohini,Morning,35
+Karol Bagh,Rohini,Afternoon,17
+Karol Bagh,Rohini,Evening,31
+Karol Bagh,Rohini,Night,25
+Karol Bagh,Vasant Kunj,Morning,25
+Karol Bagh,Vasant Kunj,Afternoon,35
+Karol Bagh,Vasant Kunj,Evening,35
+Karol Bagh,Vasant Kunj,Night,19
+Karol Bagh,Nehru Place,Morning,21
+Karol Bagh,Nehru Place,Afternoon,30
+Karol Bagh,Nehru Place,Evening,28
+Karol Bagh,Nehru Place,Night,11
+Karol Bagh,Greater Kailash,Morning,36
+Karol Bagh,Greater Kailash,Afternoon,34
+Karol Bagh,Greater Kailash,Evening,25
+Karol Bagh,Greater Kailash,Night,10
+Dwarka,Lajpat Nagar,Morning,27
+Dwarka,Lajpat Nagar,Afternoon,29
+Dwarka,Lajpat Nagar,Evening,42
+Dwarka,Lajpat Nagar,Night,21
+Dwarka,Chandni Chowk,Morning,25
+Dwarka,Chandni Chowk,Afternoon,18
+Dwarka,Chandni Chowk,Evening,44
+Dwarka,Chandni Chowk,Night,18
+Dwarka,Connaught Place,Morning,37
+Dwarka,Connaught Place,Afternoon,28
+Dwarka,Connaught Place,Evening,38
+Dwarka,Connaught Place,Night,23
+Dwarka,Saket,Morning,37
+Dwarka,Saket,Afternoon,18
+Dwarka,Saket,Evening,26
+Dwarka,Saket,Night,16
+Dwarka,Karol Bagh,Morning,33
+Dwarka,Karol Bagh,Afternoon,21
+Dwarka,Karol Bagh,Evening,50
+Dwarka,Karol Bagh,Night,22
+Dwarka,Rohini,Morning,33
+Dwarka,Rohini,Afternoon,15
+Dwarka,Rohini,Evening,44
+Dwarka,Rohini,Night,11
+Dwarka,Vasant Kunj,Morning,28
+Dwarka,Vasant Kunj,Afternoon,28
+Dwarka,Vasant Kunj,Evening,29
+Dwarka,Vasant Kunj,Night,20
+Dwarka,Nehru Place,Morning,27
+Dwarka,Nehru Place,Afternoon,26
+Dwarka,Nehru Place,Evening,25
+Dwarka,Nehru Place,Night,13
+Dwarka,Greater Kailash,Morning,37
+Dwarka,Greater Kailash,Afternoon,16
+Dwarka,Greater Kailash,Evening,28
+Dwarka,Greater Kailash,Night,10
+Rohini,Lajpat Nagar,Morning,45
+Rohini,Lajpat Nagar,Afternoon,33
+Rohini,Lajpat Nagar,Evening,28
+Rohini,Lajpat Nagar,Night,15
+Rohini,Chandni Chowk,Morning,37
+Rohini,Chandni Chowk,Afternoon,17
+Rohini,Chandni Chowk,Evening,40
+Rohini,Chandni Chowk,Night,20
+Rohini,Connaught Place,Morning,27
+Rohini,Connaught Place,Afternoon,17
+Rohini,Connaught Place,Evening,46
+Rohini,Connaught Place,Night,17
+Rohini,Saket,Morning,45
+Rohini,Saket,Afternoon,16
+Rohini,Saket,Evening,43
+Rohini,Saket,Night,22
+Rohini,Karol Bagh,Morning,25
+Rohini,Karol Bagh,Afternoon,31
+Rohini,Karol Bagh,Evening,48
+Rohini,Karol Bagh,Night,18
+Rohini,Dwarka,Morning,44
+Rohini,Dwarka,Afternoon,25
+Rohini,Dwarka,Evening,33
+Rohini,Dwarka,Night,18
+Rohini,Vasant Kunj,Morning,33
+Rohini,Vasant Kunj,Afternoon,34
+Rohini,Vasant Kunj,Evening,39
+Rohini,Vasant Kunj,Night,19
+Rohini,Nehru Place,Morning,36
+Rohini,Nehru Place,Afternoon,20
+Rohini,Nehru Place,Evening,27
+Rohini,Nehru Place,Night,25
+Rohini,Greater Kailash,Morning,45
+Rohini,Greater Kailash,Afternoon,30
+Rohini,Greater Kailash,Evening,38
+Rohini,Greater Kailash,Night,20
+Vasant Kunj,Lajpat Nagar,Morning,36
+Vasant Kunj,Lajpat Nagar,Afternoon,33
+Vasant Kunj,Lajpat Nagar,Evening,33
+Vasant Kunj,Lajpat Nagar,Night,23
+Vasant Kunj,Chandni Chowk,Morning,27
+Vasant Kunj,Chandni Chowk,Afternoon,27
+Vasant Kunj,Chandni Chowk,Evening,43
+Vasant Kunj,Chandni Chowk,Night,18
+Vasant Kunj,Connaught Place,Morning,27
+Vasant Kunj,Connaught Place,Afternoon,22
+Vasant Kunj,Connaught Place,Evening,49
+Vasant Kunj,Connaught Place,Night,21
+Vasant Kunj,Saket,Morning,22
+Vasant Kunj,Saket,Afternoon,33
+Vasant Kunj,Saket,Evening,48
+Vasant Kunj,Saket,Night,14
+Vasant Kunj,Karol Bagh,Morning,24
+Vasant Kunj,Karol Bagh,Afternoon,24
+Vasant Kunj,Karol Bagh,Evening,48
+Vasant Kunj,Karol Bagh,Night,23
+Vasant Kunj,Dwarka,Morning,32
+Vasant Kunj,Dwarka,Afternoon,27
+Vasant Kunj,Dwarka,Evening,29
+Vasant Kunj,Dwarka,Night,17
+Vasant Kunj,Rohini,Morning,37
+Vasant Kunj,Rohini,Afternoon,26
+Vasant Kunj,Rohini,Evening,49
+Vasant Kunj,Rohini,Night,20
+Vasant Kunj,Nehru Place,Morning,23
+Vasant Kunj,Nehru Place,Afternoon,24
+Vasant Kunj,Nehru Place,Evening,28
+Vasant Kunj,Nehru Place,Night,11
+Vasant Kunj,Greater Kailash,Morning,36
+Vasant Kunj,Greater Kailash,Afternoon,15
+Vasant Kunj,Greater Kailash,Evening,31
+Vasant Kunj,Greater Kailash,Night,21
+Nehru Place,Lajpat Nagar,Morning,41
+Nehru Place,Lajpat Nagar,Afternoon,23
+Nehru Place,Lajpat Nagar,Evening,35
+Nehru Place,Lajpat Nagar,Night,18
+Nehru Place,Chandni Chowk,Morning,39
+Nehru Place,Chandni Chowk,Afternoon,32
+Nehru Place,Chandni Chowk,Evening,50
+Nehru Place,Chandni Chowk,Night,10
+Nehru Place,Connaught Place,Morning,23
+Nehru Place,Connaught Place,Afternoon,24
+Nehru Place,Connaught Place,Evening,38
+Nehru Place,Connaught Place,Night,25
+Nehru Place,Saket,Morning,33
+Nehru Place,Saket,Afternoon,24
+Nehru Place,Saket,Evening,44
+Nehru Place,Saket,Night,19
+Nehru Place,Karol Bagh,Morning,37
+Nehru Place,Karol Bagh,Afternoon,25
+Nehru Place,Karol Bagh,Evening,36
+Nehru Place,Karol Bagh,Night,15
+Nehru Place,Dwarka,Morning,40
+Nehru Place,Dwarka,Afternoon,33
+Nehru Place,Dwarka,Evening,28
+Nehru Place,Dwarka,Night,19
+Nehru Place,Rohini,Morning,41
+Nehru Place,Rohini,Afternoon,34
+Nehru Place,Rohini,Evening,37
+Nehru Place,Rohini,Night,18
+Nehru Place,Vasant Kunj,Morning,20
+Nehru Place,Vasant Kunj,Afternoon,32
+Nehru Place,Vasant Kunj,Evening,43
+Nehru Place,Vasant Kunj,Night,21
+Nehru Place,Greater Kailash,Morning,30
+Nehru Place,Greater Kailash,Afternoon,32
+Nehru Place,Greater Kailash,Evening,34
+Nehru Place,Greater Kailash,Night,23
+Greater Kailash,Lajpat Nagar,Morning,42
+Greater Kailash,Lajpat Nagar,Afternoon,25
+Greater Kailash,Lajpat Nagar,Evening,27
+Greater Kailash,Lajpat Nagar,Night,17
+Greater Kailash,Chandni Chowk,Morning,22
+Greater Kailash,Chandni Chowk,Afternoon,33
+Greater Kailash,Chandni Chowk,Evening,47
+Greater Kailash,Chandni Chowk,Night,23
+Greater Kailash,Connaught Place,Morning,20
+Greater Kailash,Connaught Place,Afternoon,24
+Greater Kailash,Connaught Place,Evening,29
+Greater Kailash,Connaught Place,Night,11
+Greater Kailash,Saket,Morning,27
+Greater Kailash,Saket,Afternoon,22
+Greater Kailash,Saket,Evening,43
+Greater Kailash,Saket,Night,16
+Greater Kailash,Karol Bagh,Morning,21
+Greater Kailash,Karol Bagh,Afternoon,34
+Greater Kailash,Karol Bagh,Evening,34
+Greater Kailash,Karol Bagh,Night,17
+Greater Kailash,Dwarka,Morning,30
+Greater Kailash,Dwarka,Afternoon,25
+Greater Kailash,Dwarka,Evening,46
+Greater Kailash,Dwarka,Night,18
+Greater Kailash,Rohini,Morning,44
+Greater Kailash,Rohini,Afternoon,29
+Greater Kailash,Rohini,Evening,44
+Greater Kailash,Rohini,Night,10
+Greater Kailash,Vasant Kunj,Morning,22
+Greater Kailash,Vasant Kunj,Afternoon,16
+Greater Kailash,Vasant Kunj,Evening,36
+Greater Kailash,Vasant Kunj,Night,17
+Greater Kailash,Nehru Place,Morning,33
+Greater Kailash,Nehru Place,Afternoon,28
+Greater Kailash,Nehru Place,Evening,41
+Greater Kailash,Nehru Place,Night,21

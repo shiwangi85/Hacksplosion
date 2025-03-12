@@ -4,7 +4,7 @@ const MapComponent = () => {
   const [location, setLocation] = useState<{ lat: number; lng: number } | null>(null);
   const [map, setMap] = useState<any>(null);
   const [marker, setMarker] = useState<any>(null);
-  const mapplsApiKey = "9fa106fc5e89d46ea995c238fea17299"; // Replace with your API key
+  const mapplsApiKey = "a0c74d4d-1d2e-4ff5-ad7a-c7169ef365db"; // Replace with your API key
 
   useEffect(() => {
     if (navigator.geolocation) {
@@ -40,7 +40,7 @@ const MapComponent = () => {
       setMarker(newMarker);
       map.setCenter(location);
     }
-  }, [location, map]); // Runs when location or map changes
+  }, [location, map]);
 
   useEffect(() => {
     if (!location) return;
@@ -52,29 +52,37 @@ const MapComponent = () => {
         center: location,
         zoom: 12,
         zoomControl: true,
-        hybrid: false,
+        hybrid: false, // Set to false if you don't want satellite view
       });
+
+      setMap(mapInstance);
 
       const initialMarker = new window.MapmyIndia.Marker({
         map: mapInstance,
         position: location,
         draggable: false,
       });
-
-      setMap(mapInstance);
       setMarker(initialMarker);
+
+      // Enable Traffic Layer
+      window.MapmyIndia.traffic({
+        map: mapInstance,
+        show: true,
+      });
+
+      console.log("Traffic layers enabled.");
     }
 
     if (window.MapmyIndia) {
       initializeMap();
     } else {
-      console.log("Loading MapMyIndia script...");
+      console.log("Loading MapmyIndia script...");
       const script = document.createElement("script");
       script.src = `https://apis.mappls.com/advancedmaps/api/${mapplsApiKey}/map_sdk?layer=vector&v=2.0`;
       script.async = true;
       script.defer = true;
       script.onload = () => {
-        console.log("MapMyIndia script loaded.");
+        console.log("MapmyIndia script loaded.");
         initializeMap();
       };
       document.head.appendChild(script);

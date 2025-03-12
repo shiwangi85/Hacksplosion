@@ -1,7 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navbar from './components/Navbar';
+// import Shipment from './pages/Shipment';
 import LoginButton from './components/LoginButton';
+import Shipment from './pages/Shipment';
 import Dashboard from './pages/Dashboard';
 import Vehicles from './pages/Vehicles';
 import Emergency from './pages/Emergency';
@@ -22,6 +24,7 @@ function App() {
           <div className="p-8 pt-16">
             <Routes>
               <Route path="/" element={<Dashboard />} />
+              <Route path="/Shipment" element={<Shipment />} />
               <Route path="/vehicles" element={<Vehicles />} />
               <Route path="/emergency" element={<Emergency />} />
               <Route path="/gamification" element={<Gamification />} />
