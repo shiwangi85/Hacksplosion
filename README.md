@@ -9,7 +9,8 @@ terminal cmd -- npm run dev
 
 backend location ( urban mobility -> server -> optmizier.py / server.js)
 
-server(backend) cmd -->node server.js 
+server(backend) cmd -->node server.js , npm run dev
+
 
 npm run dev — main ui 
 
