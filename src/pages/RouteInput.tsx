@@ -15,7 +15,7 @@ const getActiveVehicle = () => {
   return activeVehicle ? JSON.parse(activeVehicle) : null;
 };
 // const MAPPLS_API_KEY = "f9103064-b408-4a94-942c-11fd3dcbe5a6";
-const MAPPLS_API_KEY = "b41dd109-a999-4383-930e-9c8bded58a92";
+const MAPPLS_API_KEY = "333719c2-e8bb-4c29-aff7-0242b774b386";
 
 // Add these interfaces at the top of the file
 interface Location {
@@ -518,7 +518,7 @@ const RouteInput = () => {
           <div className="relative">
             <label
               htmlFor="source"
-              className="text-purple-500 font-bold text-xl"
+              className="text-xl  font-extrabold bg-gradient-to-r from-indigo-800 via-purple-700 to-purple-800 text-transparent bg-clip-text font-serif "
             >
               Starting Point
             </label>
@@ -582,7 +582,7 @@ const RouteInput = () => {
 
             <label
               htmlFor="destination"
-              className="text-purple-500 font-bold text-xl"
+              className="text-xl  font-extrabold bg-gradient-to-r from-indigo-800 via-purple-800 to-purple-700 text-transparent bg-clip-text font-serif "
             >
               Destination
             </label>
@@ -627,7 +627,7 @@ const RouteInput = () => {
 
         {/* Vehicle Type Selection */}
         <div className="text-black">
-          <label className="text-purple-500 font-bold text-xl">
+          <label className="text-xl  font-extrabold bg-gradient-to-r from-indigo-800 via-purple-800 to-purple-700 text-transparent bg-clip-text font-serif ">
             Vehicle Type
           </label>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -712,7 +712,7 @@ const RouteInput = () => {
           <div id="map" style={{ width: "70%", height: "500px" }}></div>
           {sourceLocation && destLocation &&
             (<div className="w-[30%] p-4 bg-white rounded-lg shadow overflow-auto">
-              <h2 className="text-purple-500 font-bold text-xl">Available Routes</h2>
+              <h2 className="text-xl  font-extrabold bg-gradient-to-r from-indigo-800 via-purple-700 to-purple-500 text-transparent bg-clip-text font-serif ">Available Routes</h2>
 
 
 

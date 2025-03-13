@@ -17,17 +17,17 @@ const data = [
 ];
 
 const pieData = [
-  { name: 'Electric', value: 45 },
+  { name: 'Electric', value: 45  },
   { name: 'Hybrid', value: 30 },
   { name: 'Gas', value: 25 },
 ];
 
-const COLORS = ['#818cf8', '#34d399', '#fb7185'];
+const COLORS = ['#918cf9', '#34d399', '#fb7185'];
 
 const stats = [
   {
     title: 'Active Users',
-    value: '1,429',
+    value: '429',
     change: '+8%',
     icon: Users,
     color: 'from-indigo-500/20 to-indigo-600/20',
@@ -304,7 +304,7 @@ export default function Dashboard() {
       </div>
 
       <div className="p-6 rounded-xl border-4 border-black-900/30 bg-cream-900/30 backdrop-blur-md">
-        <h2 className="text-4xl font-bold text-purple-500 mb-6 font-serif text-center">
+        <h2 className="text-4xl  font-extrabold bg-gradient-to-r from-indigo-800 via-purple-700 to-purple-500 text-transparent bg-clip-text  font-serif text-center">
           Route Planner
         </h2>
         <div className="w-full border-b-2 border-purple-400 mb-6"></div>
@@ -312,104 +312,119 @@ export default function Dashboard() {
         <RouteInput />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <div key={stat.title} className="glass-card p-6 rounded-xl">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm text-gray-600 font-medium">{stat.title}</p>
-                  <p className="text-2xl font-bold mt-1 text-gray-600">{stat.value}</p>
-                </div>
-                <div className={`p-3 rounded-lg bg-gradient-to-br ${stat.color}`}>
-                  <Icon className={`w-6 h-6 ${stat.iconColor}`} />
-                </div>
-              </div>
-              <p className={`text-sm mt-2 font-medium ${stat.change.startsWith('+') ? 'text-emerald-400' : 'text-rose-400'}`}>
-                {stat.change} from last week
-              </p>
+
+<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  {stats.map((stat) => {
+    const Icon = stat.icon;
+    return (
+      <div key={stat.title} className="group relative glass-card p-6 rounded-xl transition-all duration-300">
+        {/* Gradient Border Effect */}
+        <div className="absolute inset-0 rounded-xl border-2 border-transparent 
+            group-hover:border-transparent group-hover:bg-gradient-to-r 
+          group-hover:from-blue-200 group-hover:to-blue-200 
+            group-hover:p-[2px] transition-all duration-300"></div>
+
+        {/* Content Inside */}
+        <div className="relative bg-white/10 p-6 rounded-xl">
+          <div className="flex items-center justify-between">
+            <div>
+              <p className="text-sm text-gray-600 font-medium">{stat.title}</p>
+              <p className="text-2xl font-bold mt-1 text-gray-600">{stat.value}</p>
             </div>
-          );
-        })}
+            <div className={`p-3 rounded-lg bg-gradient-to-br ${stat.color}`}>
+              <Icon className={`w-6 h-6 ${stat.iconColor}`} />
+            </div>
+          </div>
+          <p className={`text-sm mt-2 font-medium ${stat.change.startsWith('+') ? 'text-emerald-400' : 'text-red-600'}`}>
+            {stat.change} from last week
+          </p>
+        </div>
       </div>
+    );
+  })}
+</div>
+
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="glass-card p-6 rounded-xl lg:col-span-2">
-          <h2 className="text-xl font-bold gradient-text mb-6">Performance Analytics</h2>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={data}>
-                <CartesianGrid strokeDasharray="3 3" stroke="rgba(99, 102, 241, 0.1)" />
-                <XAxis dataKey="name" stroke="#9ca3af" />
-                <YAxis stroke="#9ca3af" />
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1f2937',
-                    border: '1px solid #374151',
-                    borderRadius: '0.75rem',
-                    color: '#f3f4f6'
-                  }}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="optimization"
-                  stroke="#818cf8"
-                  strokeWidth={2}
-                  dot={{ fill: '#818cf8', strokeWidth: 2 }}
-                  name="Route Optimization"
-                />
-                <Line
-                  type="monotone"
-                  dataKey="emergency"
-                  stroke="#fb7185"
-                  strokeWidth={2}
-                  dot={{ fill: '#fb7185', strokeWidth: 2 }}
-                  name="Emergency Responses"
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </div>
-        </div>
+  <div className="group relative glass-card p-6 rounded-xl lg:col-span-2 transition-all duration-300">
+    {/* Gradient Border Effect */}
+    <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-transparent 
+        group-hover:bg-gradient-to-r group-hover:from-blue-200 group-hover:to-blue-200 
+        group-hover:p-[2px] transition-all duration-300"></div>
 
-        <div className="glass-card p-6 rounded-xl">
-          <h2 className="text-xl font-bold gradient-text mb-6">Fleet Distribution</h2>
-          <div className="h-[300px]">
-            <ResponsiveContainer width="100%" height="100%">
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  innerRadius={60}
-                  outerRadius={80}
-                  paddingAngle={5}
-                  dataKey="value"
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: '#1f2937',
-                    border: '1px solid #374151',
-                    borderRadius: '0.75rem',
-                    color: '#f3f4f6'
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
-          <div className="mt-6 space-y-3">
-            {pieData.map((entry, index) => (
-              <div key={entry.name} className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index] }} />
-                <span className="text-sm font-medium text-gray-500">{entry.name}</span>
-                <span className="text-sm font-bold text-gray-500 ml-auto">{entry.value}%</span>
-              </div>
-            ))}
-          </div>
-        </div>
+    {/* Content Inside */}
+    <div className="relative bg-white/10 p-6 rounded-xl">
+      <h2 className="text-xl font-extrabold bg-gradient-to-r from-indigo-800 via-purple-700 to-purple-500 text-transparent bg-clip-text font-serif">
+        Performance Analytics
+      </h2>
+      <div className="h-[300px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <LineChart data={data}>
+            <CartesianGrid strokeDasharray="3 3" stroke="rgba(99, 102, 241, 0.1)" />
+            <XAxis dataKey="name" stroke="#9ca3af" />
+            <YAxis stroke="#9ca3af" />
+            <Tooltip
+              contentStyle={{
+                backgroundColor: '#1f2937',
+                border: '1px solid #374151',
+                borderRadius: '0.75rem',
+                color: '#f3f4f6'
+              }}
+            />
+            <Line type="monotone" dataKey="optimization" stroke="#818cf8" strokeWidth={2} dot={{ fill: '#818cf8', strokeWidth: 2 }} name="Route Optimization" />
+            <Line type="monotone" dataKey="emergency" stroke="#fb7185" strokeWidth={2} dot={{ fill: '#fb7185', strokeWidth: 2 }} name="Emergency Responses" />
+          </LineChart>
+        </ResponsiveContainer>
       </div>
+    </div>
+  </div>
+
+  <div className="group relative glass-card p-6 rounded-xl transition-all duration-300">
+    {/* Gradient Border Effect */}
+    <div className="absolute inset-0 rounded-xl border-2 border-transparent group-hover:border-transparent 
+        group-hover:bg-gradient-to-r group-hover:from-blue-200 group-hover:to-blue-200 
+        group-hover:p-[2px] transition-all duration-300"></div>
+
+    {/* Content Inside */}
+    <div className="relative bg-white/10 p-6 rounded-xl">
+      <h2 className="text-xl font-extrabold bg-gradient-to-r from-indigo-800 via-purple-700 to-purple-500 text-transparent bg-clip-text font-serif">
+        Fleet Distribution
+      </h2>
+      <div className="h-[300px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <PieChart>
+            <Pie data={pieData} innerRadius={60} outerRadius={80} paddingAngle={5} dataKey="value">
+              {pieData.map((entry, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                backgroundColor: '#1f2937',
+                border: '1px solid #374151',
+                borderRadius: '0.75rem',
+                color: '#f3f4f6'
+              }}
+            />
+          </PieChart>
+        </ResponsiveContainer>
+      </div>
+
+      <div className="mt-6 space-y-3">
+        {pieData.map((entry, index) => (
+          <div key={entry.name} className="flex items-center gap-3">
+            <div className="w-3 h-3 rounded-full" style={{ backgroundColor: COLORS[index] }} />
+            <span className="text-sm font-medium text-black">{entry.name}</span>
+            <span className="text-sm font-bold text-gray-500 ml-auto">{entry.value}%</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
     </div>
   );
 }

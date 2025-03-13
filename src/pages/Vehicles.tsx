@@ -80,16 +80,18 @@ export default function Vehicles() {
 
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-blue-400">Fleet Management</h1>
+      <h1 className="text-5xl font-extrabold bg-gradient-to-r from-indigo-700 via-purple-500 to-purple-300 text-transparent bg-clip-text font-serif">Fleet Management</h1>
       <button
         onClick={() => setIsModalOpen(true)}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700"
+        className="text-white bg-gradient-to-r from-purple-500 via-purple-600 to-purple-800 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-purple-300 dark:focus:ring-purple-800 shadow-lg shadow-purple-500/50 dark:shadow-lg dark:shadow-purple-800/80 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 "
       >
         Add Vehicle
       </button>
       <div className="grid gap-6">
         {vehicles.map((vehicle) => (
-          <div key={vehicle.id} className="bg-gray-800 p-6 rounded-xl border border-gray-700">
+          <div key={vehicle.id} className=" bg-gray-800 p-6 rounded-xl border border-gray-700 transition-all duration-300 
+    hover:shadow-2xl hover:shadow-purple-600 hover:border-2 hover:border-transparent 
+    ">
             <div className="flex justify-between items-start">
               <div>
                 <h3 className="text-xl font-semibold text-white">{vehicle.car_type}</h3>

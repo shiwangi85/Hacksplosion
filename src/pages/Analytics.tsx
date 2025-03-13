@@ -27,7 +27,7 @@ const CustomTooltip = ({ active, payload }) => {
 export default function Analytics() {
   return (
     <div className="space-y-6">
-      <h1 className="text-3xl font-bold text-blue-400">Analytics</h1>
+      <h1 className="text-6xl  font-extrabold bg-gradient-to-r from-indigo-800 via-purple-700 to-purple-500 text-transparent bg-clip-text  font-serif ">Analytics</h1>
 
       <div className="bg-gray-800 p-6 rounded-xl border border-gray-700">
         <h2 className="text-xl font-semibold mb-4 text-blue-400">CO2 Emission Distribution</h2>
