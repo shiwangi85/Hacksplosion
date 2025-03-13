@@ -1,7 +1,7 @@
-# Delloite Hackathon Project 
+#  Hackathon Project 
 
 Urban-Mobility
-#Delloite Hackathon Project
+# Hackathon Project
 Problem statement As cities grow, efficient logistics and transport are vital for productivity and safety. A consulting firm must solve two key urban mobility challenges.
 
 Logistics & Delivery Challenges 🚛 India ranks 38th in the Logistics Performance Index (LPI) 2023 ⏳ 40% of total delivery time is wasted in traffic congestion (NITI Aayog). 💰 Logistics costs in India are 14% of GDP, compared to 8-9% in developed countries (World Bank).
