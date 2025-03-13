@@ -24,6 +24,20 @@ route optmization - ortool (that use algo vrp )
 
 
 
+1️⃣ Navigate to your project folder -- pwd 
+
+2️⃣ Initialize Git (if not already done)  -- git init
+
+3️⃣ Add all files to stagin -- git add .
+
+4️⃣ Commit your changes -- git commit -m "Updated Blockchain Ledger with UI improvements"
+
+5️⃣ Check if the remote repository is added -- git remote -v
+
+   If no remote is added, link your GitHub repository:  git remote add origin https://github.com/your-username/your-repo.git
+   
+6️⃣ Push the code to GitHubgit push -u origin main
+
 Website - https://deloitte-project.vercel.app/
 
 github - https://github.com/Shiwangi6587/Deloitte-project
