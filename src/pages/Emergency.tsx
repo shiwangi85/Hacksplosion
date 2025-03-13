@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { AlertTriangle, MapPin, Clock } from 'lucide-react';
 
 const emergencies = [
-  { id: '1', type: 'Ambulance', priority: 1, status: 'Responding', location: 'Downtown' },
+  { id: '1', type: 'Petrol Pump', priority: 2, status: 'On Duty', location: 'City Center' },
   { id: '2', type: 'Fire Truck', priority: 2, status: 'Available', location: 'North Station' },
-  { id: '3', type: 'Petrol Pump', priority: 2, status: 'On Duty', location: 'City Center' }
+  { id: '3', type: 'Ambulance', priority: 1, status: 'Responding', location: 'Downtown' }
 ];
 
 const nearbyHospitals = [
@@ -49,13 +49,11 @@ export default function Emergency() {
             <div className="flex justify-between items-start">
               <div>
                 <div className="flex items-center gap-3">
-                  <AlertTriangle className={`w-6 h-6 ${
-                    emergency.priority === 1 ? 'text-red-500' : 'text-yellow-500'
-                  }`} />
+                  <AlertTriangle className={`w-6 h-6 ${emergency.priority === 1 ? 'text-red-500' : 'text-yellow-500'
+                    }`} />
                   <h3 className="text-xl font-semibold">{emergency.type}</h3>
-                  <span className={`px-2 py-1 rounded text-sm ${
-                    emergency.status === 'Responding' ? 'bg-red-600' : 'bg-green-600'
-                  }`}>
+                  <span className={`px-2 py-1 rounded text-sm ${emergency.status === 'Responding' ? 'bg-red-600' : 'bg-green-600'
+                    }`}>
                     {emergency.status}
                   </span>
                 </div>
@@ -159,3 +157,105 @@ export default function Emergency() {
     </div>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

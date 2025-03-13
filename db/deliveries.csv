@@ -1,0 +1,11 @@
+id,customer,deliveryPoint,coordinates,packageWeight,time,items
+1,Aarav Mehta,"B-45, Connaught Place, New Delhi","28.6315,77.2167",12.3,2025-03-12T09:00:00,Wooden Wall Clock (Wall Decor); Handwoven Table Runner (Table Decor)
+2,Simran Kaur,"C-12, South Extension, New Delhi","28.5683,77.2273",9.5,2025-03-12T09:45:00,Modern Table Lamp (Lighting); Floral Canvas Painting (Wall Art)
+3,Rohan Verma,"K-20, Lajpat Nagar, New Delhi","28.5675,77.2432",14.7,2025-03-12T10:15:00,Macrame Wall Hanging (Wall Decor); Decorative Mirror Frame (Mirror Decor)
+4,Neha Sharma,"A-56, Vasant Kunj, New Delhi","28.5206,77.1591",11.2,2025-03-12T10:50:00,Boho Throw Pillows (Textiles); Abstract Wall Art (Wall Decor)
+5,Kunal Bansal,"D-33, Karol Bagh, New Delhi","28.6487,77.1926",13.1,2025-03-12T11:30:00,Handcrafted Wooden Tray (Table Decor); Vintage Candle Holders (Decor Accessories)
+6,Pooja Kapoor,"E-88, Greater Kailash, New Delhi","28.5516,77.2364",10.8,2025-03-12T12:00:00,Marble Plant Pots (Indoor Plants); Hanging Lanterns (Lighting)
+7,Ankit Gupta,"G-14, Rohini Sector 9, Delhi","28.7318,77.1174",8.4,2025-03-12T12:30:00,Decorative Ceramic Vase (Table Decor); Wall Mounted Bookshelf (Furniture)
+8,Shruti Chawla,"H-67, Dwarka Sector 10, Delhi","28.5793,77.0648",15.6,2025-03-12T13:15:00,Luxury Persian Rug (Textiles); Handmade Clay Sculptures (Decor Accessories)
+9,Vikram Malhotra,"I-21, Janakpuri, New Delhi","28.6214,77.0883",9.9,2025-03-12T14:00:00,Traditional Wooden Swing (Furniture); Terracotta Wall Plates (Wall Decor)
+10,Tanya Khurana,"J-45, Paschim Vihar, New Delhi","28.6755,77.1051",12.0,2025-03-12T14:30:00,Handwoven Jute Carpet (Textiles); Bamboo Table Organizer (Table Decor)
